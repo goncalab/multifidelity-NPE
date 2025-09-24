@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mf_npe"
+version = "0.1.1"
+description = "Multifidelity NPE"
+authors = [
+    { name = "Anonymous for review", email = "anonymous@gmail.com"},
+]
+dependencies = [
+    "sbi==0.25.0",
+    "jaxley==0.11.2", 
+    "pyyaml==6.0.2",
+    "einops==0.8.1",
+    "plotly==6.0.0",
+    "kaleido==0.2.1",
+    "pandas==2.2.3",
+    "scipy>=1.13.0",
+    "seaborn==0.13.2",
+    "botorch==0.15.1"
+]
+
+requires-python = ">=3.9"
+readme = "README.md"
+keywords = ["sbi", "simulator", "neuroscience", "biophysics", "interpretability"]
+
+[tool.setuptools.package-data]
+esp_debug_backend = ["hw_specific/esp_init.gdb"]
+
+
+# Package installation configuration
+[tool.setuptools.packages.find]
+where = ["."]  # list of folders that contain the packages (["."] by default)
+include = ["mf_npe*"]  # package names should match these glob patterns (["*"] by default)
+# exclude = ["sbi-logs*"]  # exclude packages matching these glob patterns (empty by default)
+namespaces = false  # to disable scanning PEP 420 namespaces (true by default)

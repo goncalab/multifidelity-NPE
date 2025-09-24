@@ -1,0 +1,53 @@
+mf_npe/wandb/
+mf_npe/simulator/task3/data_synapsesbi
+mf_npe/simulator/task3/task_configs
+mf_npe/sbi-logs/
+*.pyc
+*.egg-info/
+build/
+dist/
+data/
+data/SynapticPlasticity/
+data/SynapticPlasticity.zip
+data/L5PC/
+data/L5PC.zip
+data/OUprocess/
+data/OUprocess_full/
+data/OUprocess/3_dimensions/
+data/OUprocess/4_dimensions/
+data/OUprocess/noise_tl/
+data/OUprocess.zip
+data/figma_exports/
+data/illustrator/
+data/SIR/
+data/SLCP/
+data/GaussianBlob/
+data/LotkaVolterra/
+mf_npe/active_learning_results/
+mf_npe/al_results/
+mf_npe/sbi-logs/
+sbi-logs/
+
+# Pycache
+**/__pycache__/
+__pycache__/
+**/.ipynb_checkpoints/
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS files
+.DS_Store
+**/.DS_Store
+data/.DS_Store
+
+# VSCode settings 
+.vscode/
+
+# Virtual environments
+venv/
+.env/
+.venv/
