@@ -9,19 +9,19 @@ Across many domains of science, stochastic models are an essential tool to under
 # Package information
 This repository provides the full pipeline for training and evaluating multifidelity simulation-based inference models (e.g., MF-NPE, MF-TSNPE, Active MF-TSNPE, etc.) across four benchmarking tasks and two real-world tasks. Each task includes a high-fidelity simulator and a corresponding low-fidelity approximation. The supported tasks are:
 
-### **Benchmarking tasks**
+### **Supported tasks**
 - OUprocess
 - SIR
 - SLCP
 - GaussianBlob
-- L5PC
-- SynapticPlasticity
+- L5PC$^1$
+- SynapticPlasticity$^2$
 
 
-### **Neuroscience Task 1: L5PC Multicompartmental Neuron Model (L5PC)**
+### **[1] Neuroscience Task: L5PC Multicompartmental Neuron Model (L5PC)**
 A biophysically detailed neuron model based on the Layer 5 Pyramidal Cell (L5PC). The membrane potential dynamics in each compartment are governed by **Hodgkin–Huxley-type equations**, simulating realistic voltage responses to injected currents. This task emphasizes morphologically rich, high-dimensional dynamics.
 
-### **Neuroscience Task 2: Synaptic Plasticity in a Recurrent Spiking Network (SynapticPlasticity)**
+### **[2] Neuroscience Task: Synaptic Plasticity in a Recurrent Spiking Network (SynapticPlasticity)**
 A recurrent spiking network of 4096 excitatory and 1024 inhibitory leaky integrate-and-fire neurons, connected via conductance-based synapses.
 The **high-fidelity simulator** is a full network simulation implemented in **Auryn** (Zenke & Gerstner, 2014), the **low-fidelity simulator** is respectively a mean-field approximation of the full network dynamics.
 
