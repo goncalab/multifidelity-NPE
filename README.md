@@ -8,8 +8,6 @@ Across many domains of science, stochastic models are an essential tool to under
 
 # Package information
 This repository provides the full pipeline for training and evaluating multifidelity simulation-based inference models (e.g., MF-NPE, MF-TSNPE, Active MF-TSNPE, etc.) across four benchmarking tasks and two real-world tasks. Each task includes a high-fidelity simulator and a corresponding low-fidelity approximation. The supported tasks are:
-
-### **Supported tasks**
 - OUprocess
 - SIR
 - SLCP
@@ -90,8 +88,7 @@ The supported options for the following arguments are:
 - **lf_datasize**: `1000`, `10_000`, `100_000`
 - **hf_datasize**: `50`, `100`, `1000`, `10_000`, `100_000`
 
-> **Generate data** To generate new training data and/or true data, add these flags to the `python train.py` command
-# --generate_true_xen --generate_train_data
+> **Generate data** To generate new training data and/or true data, add the following flags to the `python train.py` command: `--generate_true_xen` and `--generate_train_data`.
 
 > **⚠️ Warning:** By default, the number of true observations ($x_o$) is set to the values used in the paper. However, for sequential methods such as `a_mf_tsnpe` and `mf_tsnpe`, the low fidelity neural density estimators $q_\phi$ are refined through an active learning scheme that targets a **fixed** observation $x_o$. As a result, the pipeline must be run separately for each true observation to ensure a fair method comparison, which can lead to long training times.
 
