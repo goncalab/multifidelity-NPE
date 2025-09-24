@@ -5,7 +5,7 @@
 
 # DESCRIPTION: Evaluation of the performance of our methods and baseline methods, 
 # including the performance of the amortized and non-amortized methods, described in the paper.
-# > Tasks: OU process, L5PC, and SynapticPlasticity
+# > Tasks: OU process, SIR, SLCP, GaussianBlob, L5PC, and SynapticPlasticity
 
 # USAGE:
 # >> python Figure_MethodComparison.py --tasks <task_name> --theta_dim <theta_dim> --plot_amortized_and_non_amortized_seperately --eval_metric <eval_metric>
@@ -47,11 +47,6 @@ config_model = dict(
     n_bins=8,
     n_hidden_features = 50,
     clip_max_norm = 5.0, # value to which to clip total gradient norm to prevent exploding gradients. Use None for no clipping
-    
-    # Choose between logit transforming or z_scoring thetas, not both
-    # logit_transform_theta_net = True, # for training in unbound space: Then we do not have that much leakage in posterior
-    # z_score_theta = False, 
-    # z_score_x = True,
     logit_transform_theta_net = True, # for training in unbound space: Then we do not have that much leakage in posterior
     z_score_theta = False, 
     z_score_x = True,
@@ -440,8 +435,7 @@ if __name__ == "__main__":
 
             # Non-amortized posteriors
             if task in ['L5PC', 'SynapticPlasticity']:
-                # TODO: Check the df_amortized: there is something odd
-                
+
                 ######### AMORTIZED #########
                 # Put to load_from_eval when evaluating for the first time
                 load_from_eval = True # Keep on false, otherwise the true stuff disapplears for L5PC, idk. why.
@@ -460,7 +454,6 @@ if __name__ == "__main__":
 
                 ##### NON-AMORTIZED #########
                 df_non_amortized = load_and_evaluate_non_amortized_posteriors(non_amortized_posterior_samples_path, eval_metric, task)
-                # TODO: Save them as an eval file!
                 print("df_non_amortized", df_non_amortized)
                 
                 # if raw_data column exists, remove it

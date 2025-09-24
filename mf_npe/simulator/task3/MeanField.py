@@ -103,10 +103,6 @@ class MeanField(Prior):
 
         theta_matrix = torch.stack([theta[key] for key in theta_keys], dim=1)
         
-        # TODO: clamp zero values: log(0)=NaN in log transform. "divison by zero" in theta_matrix
-        # mask = (theta_matrix == 0).any(dim=1)
-        # x = x[~mask]
-        # theta_matrix = theta_matrix[~mask]
         
         # Check for NaNs and Infs and division by zero
         assert not torch.isnan(x).any(), 'NaNs in x'
@@ -139,7 +135,6 @@ class MeanField(Prior):
         '''
               Not used yet, needed for posterior predictive checks
             theta:[τpre EE, τpost EE, αEE, βEE, γEE, κEE]
-            TODO: Add a bit of gaussian noise to the equation, otherwise inference wont work
         '''
         # mean field simulator
         tpreEE = theta[:, 0]
@@ -159,7 +154,7 @@ class MeanField(Prior):
         lambdaEE = kappaEE * tpostEE + gammaEE * tpreEE
         lambdaEI = kappaEI * tpostEI + gammaEI * tpreEI
         
-        # TODO: Make the simulator stochastic
+
         rates_exc = (- alphaEE - betaEE) / lambdaEE
         rates_inh = (-alphaEI * rates_exc) / (betaEI + lambdaEI * rates_exc) # Rate inh is dependent on rate_exc
         

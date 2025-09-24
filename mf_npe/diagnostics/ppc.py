@@ -73,109 +73,6 @@ class PPC():
             fig.show()
         
 
-    # def plot_ppc_timeseries_mf(self, x_pp, config_data, true_x, title, type_samples, main_path):
-    #     n_to_plot = 10
-    #     df = pd.DataFrame(x_pp[:n_to_plot])
-    #     df.index = [f'{i+1}' for i in range(n_to_plot)]
-                    
-    #     type_x = f'{title} x(t)'
-    #     fig = px.line(df.T)
-                    
-    #     fig.add_trace(
-    #         go.Scatter(
-    #             x=np.arange(config_data['x_dim']),
-    #             y=true_x,
-    #             mode="lines",
-    #             line=go.scatter.Line(color="black", dash='dash'),
-    #             showlegend=False)
-    #     )
-                
-    #     fig.update_layout(
-    #         # xaxis=dict(
-    #         #     rangeslider=dict(
-    #         #         visible=True)),
-    #         template="simple_white",
-    #         #title=f"{type_x}", 
-    #         width=plot_config.width_plots,
-    #         height=plot_config.height_plots,
-    #         font_color=plot_config.axis_color,
-    #         font=dict(size=32),
-    #         xaxis_title="t",
-    #         yaxis_title="X(t)",
-    #         # limits on y-axis
-    #         yaxis_range=[0, 10],  #config_data['prior_ranges']['mu'] + config_data['prior_ranges']['mu_offset']]+3.0,
-    #         legend_title="samples")
-        
-    #     path_ppc = f"{main_path}/ppc"
-    #     if not os.path.exists(path_ppc):
-    #         os.makedirs(path_ppc)   
-    #     fig.write_image(f"{path_ppc}/{type_x}_{type_samples}_{config_data['type_lf']}.svg")
-    #     fig.write_html(f"{path_ppc}/{type_x}_{type_samples}_{config_data['type_lf']}.html")
-        
-    #     if plot_config.show_plots:
-    #         fig.show()
-        
-
-    # def _posterior_predictive_check_mf(self, posterior_samples, lf_posterior_samples, x_o, full_trace_true, type_estimator, n_train_sims,i ):
-    #     if self.task == 'task1':
-    #         n_samples = posterior_samples.shape[0]
-    #         prior_samples = self.hf_prior.sample((n_samples,))
-            
-    #         x_pp = self.hf_simulator.simulator(abs(posterior_samples))
-    #         x_pp_lf = self.hf_simulator.simulator(abs(lf_posterior_samples))
-    #         x_pp_prior = self.hf_simulator.simulator(abs(prior_samples))
-            
-    #         self.plot_ppc_timeseries_mf(x_pp, self.config_data, x_o, f'PPC {type_estimator}, n_sims {n_train_sims}', 'mf', self.main_path)
-    #         self.plot_ppc_timeseries_mf(x_pp_lf, self.config_data, x_o, f'PPC {type_estimator}, n_sims {n_train_sims}', 'lf', self.main_path)
-    #         self.plot_ppc_timeseries_mf(x_pp_prior, self.config_data, x_o, f'PPC {type_estimator}, n_sims {n_train_sims}', 'prior', self.main_path)
-            
-    #     elif self.task == 'task2':
-    #         print("posterior_samples", posterior_samples.shape)
-    #         posterior_samples = posterior_samples[:20]
-    #         print("posterior_samples trimm", posterior_samples.shape)
-            
-    #         cell, _ = self.hf_simulator._jaxley_neuron()
-    #         x_pp, theta_clean, add_ons = self.hf_simulator.simulator(posterior_samples, 
-    #                                             lambda params, noise_params: simulate_neuron(params, noise_params, cell, self.config_data),
-    #                                             allow_resampling_invalid_samples=False)
-    #         x_pp_lf, theta_clean_lf, add_ons_lf = self.lf_simulator.simulator(lf_posterior_samples, 
-    #                                             lambda params, noise_params: simulate_neuron(params, noise_params, cell, self.config_data),
-    #                                             allow_resampling_invalid_samples=False)
-        
-    #         x_pp_prior = self.hf_prior.sample((n_samples,))
-                        
-    #         full_traces = add_ons['full_trace']
-    #         I_inj = add_ons['inj_current']
-            
-    #         plot_xen_histogram(x_pp, 'PPC task 2', x_o)
-    #         plot_CompNeuron_xen(x_o, I_inj, full_traces, self.config_data['dt'], f'PPC {type_estimator}, n_sims: {n_train_sims}',
-    #                             type_estimator, n_train_sims, i, self.main_path, true_x_trace=full_trace_true)
-            
-            
-    #     elif self.task == 'task3':
-    #         path_simulations = ''
-            
-    #         # IMPORTANT
-    #         # Check if you load the correct true xen (true file is saved in paper folder) mf_npe/exports/paper/SpikingNetwork/true_xen_1000.p from 10/1 at 12:02
-    #         # Otherwise it will not work!!!
-            
-    #         # Load the posterior samples from the cluster
-    #         with open(path_simulations, 'rb') as f:
-    #                 posterior_samples = np.load(f)
-    #                 print("loaded a", posterior_samples)
-    #                 print("loaded a shape", posterior_samples.shape)
-            
-    #         x_pp = self.hf_simulator.simulator(posterior_samples, x_o)
-            
-    #         x_pp_lf = []
-    #         x_pp_prior = []
-            
-    #         # raise a warning
-    #         yaml.warnings.warn("x_pp_lf and x_pp_prior are empty lists. Please check the code.")
-            
-            
-    #     return x_pp, x_pp_lf, x_pp_prior
-
     def _posterior_predictive_check(self, posterior_samples, x_o, full_trace_true, type_estimator, n_train_sims, i):
         if self.task == 'task1' or self.task == 'task6':
             x_pp = self.hf_simulator.simulator(abs(posterior_samples))         
@@ -212,7 +109,6 @@ class PPC():
             x_pp = self.hf_simulator.simulator(posterior_samples, x_o)
         
         elif self.task == 'task4':
-            # TODO: run PPC if needed
             x_pp = []
         else:
             raise ValueError(f"Unknown task: {self.task}. Cannot perform posterior predictive check.")

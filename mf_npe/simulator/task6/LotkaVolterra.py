@@ -28,7 +28,7 @@ class LotkaVolterra(Prior):
         self.theta_dim = config_data['theta_dim']
         
         #self.num_steps = 50
-        self.n_of_prey_preditors = 2 # TODO: refine this in code, is not changing as expected atm
+        self.n_of_prey_preditors = 2
         
         
         self.saveat: float = 0.1 # Timestep
@@ -60,26 +60,11 @@ class LotkaVolterra(Prior):
             torch.distributions.LogNormal(loc=loc, scale=scale), 1
         ) # The 1 is the same as the toevent(1) in pyro
 
-    
-    # def prior(self):
-    #     # TODO: check this prior
-    #     prior_mean: float = 0.0
-    #     prior_scale: float = 0.5
-        
-    #     prior = torch.distributions.Independent(
-    #         torch.distributions.Normal(
-    #             torch.ones(4) * prior_mean, torch.ones(4) * prior_scale
-    #         ),
-    #         1,
-    #     )
-
-    #     return prior
-
 
     def generate_idx(self):
         # Should exponentially with n of x_dimensions
         # Create subsamples with the idx
-        idx = np.arange(0, self.n_of_prey_preditors*self.num_steps, self.subsample_rate) # Full 100 timesteps trace: TODO check again
+        idx = np.arange(0, self.n_of_prey_preditors*self.num_steps, self.subsample_rate) # Full 100 timesteps trace
         return idx
 
     def parameter_ranges(self, theta_dim):
@@ -223,10 +208,6 @@ class LotkaVolterra(Prior):
         """
         
         batch_size, _num_par = parameters.shape
-        # TODO: if smt is not working: n of prey and predators is 2, so i've put initial = to prey-preditors. but not sure if that's correct
-        # initial = torch.ones(batch_size, self.n_of_prey_preditors, device=self.device)
-    
-        # 30.0, 1.0
         initial = self.u0.expand(batch_size, 2).to(self.device) #initial * torch.tensor([30.0, 1.0], device=self.device)
 
         try:
@@ -284,134 +265,6 @@ class LotkaVolterra(Prior):
 
         return vals_over_time
 
-        
-
-    # def get_reference_posterior_samples(
-    #     self,
-    #     n_true_observation_samples: int,
-    #     true_xen,
-    #     path_to_pickles: Optional[str] = None,
-    #     *,
-    #     num_warmup: int = 2_000,
-    #     num_chains: int = 1,
-    #     max_tree_depth: int = 10,
-    #     use_cache: bool = True,
-    # ) -> torch.Tensor:
-    #     """
-    #     Draw samples from the posterior p(theta | x_obs) for Lotka–Volterra.
-
-    #     Observation model matches SBIBM:
-    #         - Simulate full trajectory with self.simulator(...)
-    #         - Subsample every `self.subsample_rate` steps (2 species × 10 points = 20D)
-    #         - Independent LogNormal noise on each component with scale=0.1
-
-    #     Args:
-    #         n_true_observation_samples: Number of posterior samples to return.
-    #         true_xen: Observed summary statistics (Tensor, numpy array, or list).
-    #                 Accepts shape (20,), (2, 10), or (10, 2). Will be flattened to (20,).
-    #         path_to_pickles: Directory for caching. If provided and use_cache=True,
-    #                         results are cached per (observation hash, n_samples).
-    #         num_warmup: NUTS warmup steps.
-    #         num_chains: MCMC chains (use >1 if you want R-hat diagnostics).
-    #         max_tree_depth: NUTS max tree depth.
-    #         use_cache: Whether to read/write cache in path_to_pickles.
-
-    #     Returns:
-    #         torch.Tensor of shape (n_true_observation_samples, 4)
-    #     """
-    #     import os
-    #     import pickle
-    #     import hashlib
-    #     import numpy as np
-    #     import pyro
-    #     import pyro.distributions as pdist
-    #     from pyro.infer.mcmc import MCMC, NUTS
-
-    #     # ---- normalize observed data to a contiguous torch tensor of length 20
-    #     if isinstance(true_xen, torch.Tensor):
-    #         y = true_xen.detach().clone()
-    #     else:
-    #         y = torch.as_tensor(true_xen, dtype=torch.get_default_dtype())
-
-    #     if y.ndim == 2:
-    #         y = y.reshape(-1)
-    #     if y.ndim != 1:
-    #         raise ValueError(f"Expected observation to be 1D or 2D, got shape {tuple(y.shape)}")
-
-    #     # For default settings (days=20, saveat=0.1, subsample_rate=21): 2 species × 10 points = 20-D
-    #     expected_dim = 2 * (self.t.numel() // self.subsample_rate + (1 if (self.t.numel() % self.subsample_rate) else 0))
-    #     # In SBIBM they take exactly 10 points; with 201 timepoints and stride 21 we indeed get 10.
-    #     # To be robust, clamp to 20 for your current setup:
-    #     expected_dim = 20
-    #     if y.numel() != expected_dim:
-    #         raise ValueError(f"Expected observation of length {expected_dim}, got {y.numel()}")
-
-    #     y = y.to(dtype=torch.get_default_dtype(), device=self.device).contiguous()
-
-    #     # ---- caching
-    #     cache_path = None
-    #     if path_to_pickles is not None:
-    #         os.makedirs(path_to_pickles, exist_ok=True)
-    #         h = hashlib.sha1(y.detach().cpu().numpy().tobytes()).hexdigest()
-    #         cache_path = os.path.join(
-    #             path_to_pickles,
-    #             f"lotka_volterra_refpost_{h}_N{n_true_observation_samples}.pkl",
-    #         )
-    #         if use_cache and os.path.exists(cache_path):
-    #             with open(cache_path, "rb") as f:
-    #                 cached = pickle.load(f)
-    #             # return as torch tensor, ensure dtype/device consistent
-    #             return torch.as_tensor(cached, dtype=torch.get_default_dtype(), device=self.device)
-
-    #     # ---- Pyro model: prior -> simulator -> subsample -> LogNormal(obs | log(sim), 0.1)
-    #     subsample_idx = torch.arange(0, self.t.numel(), self.subsample_rate, device=self.device)
-
-    #     def model(y_obs=None):
-    #         theta = pyro.sample("parameters", self.prior())  # support: positive reals via LogNormal
-    #         sim = self.simulator(theta.reshape(1, -1))       # (1, 2, T)
-    #         # pick subsamples -> flatten to (20,)
-    #         us = sim[:, :, subsample_idx].reshape(-1)        # (2 * M,)
-    #         base = us.clamp(1e-10, 1e4)
-
-    #         pyro.sample(
-    #             "obs",
-    #             pdist.LogNormal(loc=torch.log(base), scale=base.new_tensor(0.1)).to_event(1),
-    #             obs=y_obs,
-    #         )
-    #         return theta
-
-    #     # ---- run NUTS
-    #     pyro.clear_param_store()
-    #     kernel = NUTS(model, max_tree_depth=max_tree_depth, adapt_step_size=True)
-    #     mcmc = MCMC(
-    #         kernel,
-    #         num_samples=n_true_observation_samples,
-    #         warmup_steps=num_warmup,
-    #         num_chains=num_chains,
-    #         mp_context="spawn" if (num_chains > 1) else None,
-    #     )
-    #     mcmc.run(y_obs=y)
-
-    #     posterior = mcmc.get_samples()["parameters"]  # shape: (n_samples, 4), constrained space (positive)
-    #     posterior = posterior.to(self.device)
-
-    #     # ---- optional: save cache
-    #     if cache_path is not None and use_cache:
-    #         with open(cache_path, "wb") as f:
-    #             pickle.dump(posterior.detach().cpu().numpy(), f)
-
-    #     return posterior
-
-
-    
-   
-    # def get_reference_posterior_samples(self, n_true_observation_samples, true_xen, path_to_pickles) -> torch.Tensor:
-    #     """Get samples from the true posterior distribution for the SLCP task.
-    #     """
-        
-    #     # TODO
-    #     pass
-    
         
 
     def get_reference_posterior_samples(self, n_true_observation_samples, true_xen, path_to_pickles) -> torch.Tensor:

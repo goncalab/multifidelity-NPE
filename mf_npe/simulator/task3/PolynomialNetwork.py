@@ -64,7 +64,6 @@ class PolynomialNetwork(Prior):
         theta = allRules # EE_EIrules
         theta = torch.tensor(np.array(theta), dtype=torch.float32)  # Convert to pytorch objects
         
-        # TODO: Plot all theta: Should be in another function. Otherwise quite confusing.
         tpreEE = theta[:, 0]
         tpostEE = theta[:, 1]
         alphaEE = theta[:, 2]
@@ -120,7 +119,6 @@ class PolynomialNetwork(Prior):
         
         theta = torch.tensor(np.array(theta), dtype=torch.float32)  # Convert to pytorch objects
         
-        # TODO: Plot all theta: Should be in another function. Otherwise quite confusing.
         tpreEE = theta[:, 0]
         tpostEE = theta[:, 1]
         alphaEE = theta[:, 2]

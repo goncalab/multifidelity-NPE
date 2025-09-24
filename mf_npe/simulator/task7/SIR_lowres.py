@@ -95,7 +95,7 @@ class SIR_lowres(Prior):
     def generate_idx(self):
         # Should exponentially with n of x_dimensions
         # Create subsamples with the idx
-        idx = np.arange(0, self.number_observed_groups*self.num_steps, self.subsample_rate) # Full 100 timesteps trace: TODO check again
+        idx = np.arange(0, self.number_observed_groups*self.num_steps, self.subsample_rate) # Full 100 timesteps trace
         return idx
 
     def parameter_ranges(self, theta_dim):
@@ -187,8 +187,6 @@ class SIR_lowres(Prior):
         """
         
         batch_size, _num_par = parameters.shape
-        # TODO: if smt is not working: n of prey and predators is 2, so i've put initial = to prey-preditors. but not sure if that's correct    
-
         initial = self.u0.expand(batch_size, 3).to(self.device) 
 
         try:

@@ -15,9 +15,6 @@ def default_x():
         We can use these values as conditional values corresponding to which we
             sample parameters from the density estimator.
         """
-        # TODO need entry here for every metric we intend to use for filtering
-        # ["rate","cv_isi","kl_isi","spatial_Fano","temporal_Fano","auto_cov","fft",
-#                    "w_blow", "std_rate_temporal","std_rate_spatial","std_cv"]
 
 
         return {"rate": lambda num: torch.rand(num, 1) * 29 + 1, #]1,50]
@@ -52,7 +49,7 @@ def condition():
         and returns boolean indicating if it satisfies a specified condition.
     We can use these to rejection sample and reuse simulations from previous rounds.
     """
-    # TODO need entry here for every metric we intend to use for filtering
+
     return {"rate": lambda x: np.logical_and(1 <= x, x <= 50),
             "cv_isi": lambda x: np.logical_and(0.7 <= x, x <= 2.7),
             "kl_isi": lambda x: np.logical_and(0 <= x, x <= 0.5),

@@ -832,7 +832,6 @@ class Pipeline():
         # Loop over batch iterations
         for i, _ in enumerate(hf_mf_data):   
             # 1. Get all x-theta pairs
-            # TODO: Expand to multiple fidelities
             lf_x, lf_theta = lf_mf_data['lf'][i]['x'], lf_mf_data['lf'][i]['theta']
             print("lf_x shape:", lf_x.shape, "lf_theta shape:", lf_theta.shape)
 

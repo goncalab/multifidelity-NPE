@@ -9,7 +9,7 @@
 # > Tasks: Ornstein-Uhlenbeck process with 2, 3, and 4 dimensions
 
 # USAGE:
-# >> python Appendix_histogram_NeurIPS2025.py 
+# >> python Appendix_histogram.py 
 
 
 

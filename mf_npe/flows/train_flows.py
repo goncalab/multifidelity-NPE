@@ -22,8 +22,7 @@ def create_train_val_dataloaders(
     # Append for each round boolean whether samples are from prior.
     
     num_examples = theta.shape[0]
-    prior_masks = torch.ones_like(theta) # TODO: If we do active sampling, we have to change prior masks
-    
+    prior_masks = torch.ones_like(theta) 
     # domain_labels for adversarial loss: # 0 for source domain, 1 for target domain for pretraining
     if domain_labels is None:
         dataset = data.TensorDataset(theta, x, prior_masks)
@@ -112,7 +111,6 @@ def fit_conditional_normalizing_flow(
             #     x_batch = x_batch
 
             # sum over losses 
-            # TODO: I do nothing about the masks
             losses = - network.log_prob(theta_batch.unsqueeze(0), x_batch)[0]
             loss = torch.mean(losses)
             train_loss_sum += losses.sum().item()
@@ -146,8 +144,7 @@ def fit_conditional_normalizing_flow(
                     batch[1].to("cpu"),
                     batch[2].to("cpu"),
                 )
-
-                # TODO: No mask for active learning in loss
+                
                 val_losses = - network.log_prob(theta_batch.unsqueeze(0), x_batch)[0]
                 val_loss_sum += val_losses.sum().item()
 
@@ -390,10 +387,6 @@ def fit_pretrained_conditional_normalizing_flow(
     
     lambda_mmd = 10.00  # Based on paper's best result
     
-
-    # TODO: Make code cleaner
-    # Overwrite optimizer with joint x_encoder and network
-
     
     while epoch <= nb_epochs and not _converged: 
         network.train()
@@ -496,7 +489,6 @@ def fit_pretrained_conditional_normalizing_flow(
                 x_encoded_lf = lf_batch
                 x_encoded_hf = hf_batch
 
-                # TODO: No mask for active learning in loss
                 val_loss_lf = - network.log_prob(theta_batch[src_mask].unsqueeze(0), x_encoded_lf)[0]
                 
                 # In case HF samples are not present, because small batch size 

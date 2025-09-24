@@ -57,7 +57,6 @@ def _simulate_blob(xoff, yoff, gamma,
     coords = np.arange(image_size)
     xx, yy = np.meshgrid(coords, coords, indexing='xy')
 
-    # TODO: perterb the center of the blob (xoff, yoff) to posterior does not converge
 
     # compute the distance from the center of blob
     r2 = (xx - xoff)**2 + (yy - yoff)**2

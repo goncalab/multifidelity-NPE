@@ -88,7 +88,7 @@ def main():
     
     batch_df_results = pd.DataFrame()
         
-    for net_i in range(args.n_net_inits): #range(2): # TODO: Put back to range(args.n_net_inits):
+    for net_i in range(args.n_net_inits): 
         # Extract the data for the current network initialization
 
         print("net initialization:", net_i + 1)

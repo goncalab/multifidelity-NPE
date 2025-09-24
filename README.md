@@ -144,7 +144,7 @@ Run the following command to reproduce the main figures from the paper, where th
 
 ```bash
 cd plot_figures
-python Figure_MethodComparison_NeurIPS2025.py --task OUprocess
+python Figure_MethodComparison.py --task OUprocess
 ```
 
 The supported options for the following arguments are:

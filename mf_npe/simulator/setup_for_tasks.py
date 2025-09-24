@@ -207,7 +207,7 @@ def get_gaussian_blob_setup(theta_dim, n_true_xen, experiment_name):
         val_fraction = 0.1, # 0.1 is same as in sbi
         n_true_x = n_true_xen, 
         logspace = False, # sample not linearly each 10 steps but logaritmicely
-        n_samples_to_generate = 1000,  # TODO: Put to 10000
+        n_samples_to_generate = 1000,  
         # Prior ranges of HF model
         all_prior_ranges = all_prior_ranges,
         # evaluation_metric = 'nltp', # use `c2st`, `wasserstein` or `mmd`: since for this task we have a ground truth

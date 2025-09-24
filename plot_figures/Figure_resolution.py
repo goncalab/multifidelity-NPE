@@ -36,7 +36,7 @@ TITLE = None              # Most journals discourage figure titles; use panel ca
 OUT_BASENAME = "Figure_Resolution_Study_Boxplot"
 
 # Figure size: pick one
-SINGLE_COL_MM = 85        # ~single-column width (e.g., NeurIPS ~ 85–90 mm)
+SINGLE_COL_MM = 85        # ~single-column width (e.g., ~ 85–90 mm)
 DOUBLE_COL_MM = 178       # ~double-column width
 FIG_WIDTH_MM = SINGLE_COL_MM * 3   # 3 columns side-by-side; adjust as you like
 FIG_HEIGHT_MM = 55                  # keep it compact; increase if labels collide
@@ -299,62 +299,3 @@ if __name__ == "__main__":
     main()
 
 
-
-# Load three files from plot_figures/resolution_files
-# from datetime import datetime
-# from types import SimpleNamespace
-# import numpy as np
-# import matplotlib.pyplot as plt
-# import pickle
-# import os
-# import seaborn as sns
-# import pandas as pd
-# from mf_npe.plot.method_performance import plot_methods_performance_paper
-# from mf_npe.utils.load_from_eval import load_from_eval_file
-
-# path_to_data = './resolution_files' 
-# save_path = './resolution_files'
-
-# plot_setup = SimpleNamespace(
-#         main_path=path_to_data,
-#         show_plots=True,
-#         CURR_TIME=datetime.now().strftime("%Y-%m-%d %Hh%M"),
-#         width_plots=400,
-#         height_plots=200,
-#         axis_color='#6A798F',
-#         font_size=20,
-#         title_size=20,
-#         gridwidth=2,
-#         show_legend=True,
-#     )
-
-# def plot_resolution_figure(path_to_data, save_path):
-#     # Load the data
-    
-#     with open(os.path.join(path_to_data, f'evaluate_2_fidelities_lf1_nltp_npe+mf_npe_LF1000+10000_HF100_Ninits10_seed12-21.pkl'), 'rb') as f:
-#         data = pickle.load(f)
-    
-    
-    
-#     #print("Data keys:", data)
-    
-#     grouped_df = load_from_eval_file(path_to_data, 'nltp')
-    
-#     print("grouped_df", grouped_df)
-    
-    
-#     # Plot the grouped_df['mean'] as a boxplot for each group of different number of n_lf_simulations
-#     plt.figure(figsize=(10, 6))
-#     sns.boxplot(x='n_lf_simulations', y='mean', data=grouped_df)
-#     plt.xlabel('Number of Low-Fidelity Simulations', fontsize=plot_setup.font_size)
-#     plt.ylabel('Mean Value', fontsize=plot_setup.font_size)
-#     plt.title('Boxplot of Mean Values by Low-Fidelity Simulations', fontsize=plot_setup.title_size)
-#     plt.tight_layout()
-#     plt.savefig(os.path.join(save_path, 'Figure_Resolution_Study_Boxplot.png'))
-#     if plot_setup.show_plots:
-#         plt.show()
-#     plt.close()
-
-
-# plot_resolution_figure(path_to_data, save_path)
-# %%

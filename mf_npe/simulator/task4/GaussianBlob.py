@@ -321,7 +321,6 @@ def _simulate_blob(xoff, yoff, gamma,
     xoff  = xoff + rng.normal(0, 0.5)
     yoff  = yoff + rng.normal(0, 0.5)
     
-    # TODO: Make sure the jutter and logmul are the same!
     gamma_jitter_std = 0.0
 
     

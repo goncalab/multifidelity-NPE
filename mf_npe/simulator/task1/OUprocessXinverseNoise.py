@@ -185,18 +185,13 @@ class OUprocessXinverseNoise(Prior):
         
         idx = self.generate_idx()
         idx[0] = 0 # We dont want dt to be 0, otherwise we cannot compute true likelihood
-        # self.subsample_rate
-        # TODO: Fix data generation: Not 1 1 2 ... distance should be at least 1
-        
         xto_dist = self.xt0_dist(mu_offset, mu)
         xto = true_x[0]
 
         xto_log_prob = xto_dist.log_prob(xto) # Because log(1) = 0. # xto_dist.log_prob(x0)
         logsum = xto_log_prob
         
-        for j in range(1, self.x_dim):  # length_total_trace
-            #print(idx)
-            #print(idx[j]-idx[j-1])
+        for j in range(1, self.x_dim):  
             g = (1 - torch.exp(-2 * gamma * self.dt*(idx[j]-idx[j-1]))) / gamma # self.dt * sample_rate
             
             x_prev = true_x[j-1]

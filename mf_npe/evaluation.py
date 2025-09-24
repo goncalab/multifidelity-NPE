@@ -529,15 +529,6 @@ class Evaluation(Pipeline):
             3. Pairplots
         """
         
-        # Standard SBC (works)
-        #sbc = SimulationBasedCalibration(self.true_xen, self.task_setup)
-        # sbc.run_sbc(posterior, type_estimator, n_simulations)
-
-        # SBC between LF and HF (todo)
-        #if type_estimator == 'mf_npe' or type_estimator == 'a_mf_tsnpe' or type_estimator == 'mf_tsnpe':
-        #    sbc.run_sbc_lf_hf(posterior, lf_posterior, type_estimator, n_simulations)
-
-
         ### Pairplots (works, check other pairplot variations later)
         # Generate posterior samples for pairplots
         if type_estimator == 'mf_abc':

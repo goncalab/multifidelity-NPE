@@ -28,7 +28,7 @@ def plot_xen_histogram(xen, title_plot, xo):
         fig.add_trace(go.Histogram(x=df[i], name=titles[i]), row=row, col=col)
         
 
-    # TODO: For loop around does not work
+
     if xo is not None:
         # for i in range(n_plots):
             fig.update_layout(

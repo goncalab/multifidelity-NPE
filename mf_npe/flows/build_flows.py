@@ -355,7 +355,6 @@ def build_zuko_flow(
     if z_score_x:
         # Prepend standardizing transform to y-embedding.
         # For img: structured_dims = True, else False
-        # TODO: put z_score back
         embedding_net = nn.Sequential(
             standardizing_net(batch_x, structured_dims = False), embedding_net
         )

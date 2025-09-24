@@ -174,9 +174,6 @@ class OUprocessTshift(Prior):
         
         idx = self.generate_idx()
         idx[0] = 0 # We dont want dt to be 0, otherwise we cannot compute true likelihood
-        # self.subsample_rate
-        # TODO: Fix data generation: Not 1 1 2 ... distance should be at least 1
-        
         xto_dist = self.xt0_dist(mu_offset, mu)
         xto = true_x[0]
 
