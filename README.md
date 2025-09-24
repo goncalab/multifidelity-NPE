@@ -150,7 +150,7 @@ The supported options for the following arguments are:
 
 This script generates the figure in both .svg (vector format, ideal for publications) and .html (interactive format, useful for inspecting exact values by hovering in a web browser). Upon completion, the script will print the location where the figure is saved.
 
-The three main figures from the paper are the following:
+Three main figures from the paper are the following:
 ![MF-NPE visualization](plot_figures/readme_addons/results_readme.png)
 
 
