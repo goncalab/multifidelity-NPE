@@ -141,11 +141,12 @@ Run the following command to reproduce the main figures from the paper, where th
 
 ```bash
 cd plot_figures
-python Figure_MethodComparison.py --task OUprocess
+python Figure_MethodComparison.py --tasks OUprocess SIR SLCP --theta_dim 2 2 5 --plot_amortized_and_non_amortized_seperately --eval_metric c2st mmd
 ```
 
 The supported options for the following arguments are:
-- **task**: `OUprocess`, `L5PC`, `SynapticPlasticity`
+- **task**: `OUprocess`, `SIR`, `L5PC`, `GaussianBlob`, `L5PC`, `SynapticPlasticity`
+- **eval_metric**: `c2st`, `mmd`, `wasserstein`, `nltp`, `nrmse`
 
 This script generates the figure in both .svg (vector format, ideal for publications) and .html (interactive format, useful for inspecting exact values by hovering in a web browser). Upon completion, the script will print the location where the figure is saved.
 
@@ -156,7 +157,7 @@ The three main figures from the paper are the following:
 
 # Adding new experiments
 - add the simulator as a class in `simulator/task N`
-- add get_task_name and settings to `simulator/setup_for_tasks.py`
-- add get_task_name to `utils/task_setup.py > load_task_setup()`
-- add simulator and theta_dim to `eval.py` 
-- add default dimensions and n_xen to `train.py`
+- add `get_task_name` and settings to `simulator/setup_for_tasks.py`
+- add `get_task_name` to `utils/task_setup.py > load_task_setup()`
+- add `simulator` and `theta_dim `to `eval.py` 
+- add default dimensions and default number of xen to `train.py`
