@@ -14,8 +14,8 @@ This repository provides the full pipeline for training and evaluating multifide
 - SIR
 - SLCP
 - GaussianBlob
-- L5PC$^1$
-- SynapticPlasticity$^2$
+- L5PC [1]
+- SynapticPlasticity [2]
 
 
 ### **[1] Neuroscience Task: L5PC Multicompartmental Neuron Model (L5PC)**
