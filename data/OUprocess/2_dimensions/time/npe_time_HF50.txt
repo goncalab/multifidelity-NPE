@@ -1,0 +1,8 @@
+Time taken for NPE training: 1.6820852756500244 seconds
+Time taken for NPE training: 1.8086321353912354 seconds
+Time taken for NPE training: 1.7419922351837158 seconds
+Time taken for NPE training: 1.750547170639038 seconds
+Time taken for NPE training: 1.6666831970214844 seconds
+Time taken for NPE training: 1.6725900173187256 seconds
+Time taken for NPE training: 1.701970100402832 seconds
+Time taken for NPE training: 1.774813175201416 seconds

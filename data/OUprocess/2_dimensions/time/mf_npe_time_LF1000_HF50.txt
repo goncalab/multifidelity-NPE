@@ -1,0 +1,16 @@
+Time taken for LF training: 7.11599588394165 seconds
+Time taken for HF training:: 0.6852390766143799 seconds
+Time taken for MF training: 7.804027795791626 seconds
+---------------------------------------
+Time taken for LF training: 6.848808288574219 seconds
+Time taken for HF training:: 0.6274011135101318 seconds
+Time taken for MF training: 7.478971242904663 seconds
+---------------------------------------
+Time taken for LF training: 6.79447603225708 seconds
+Time taken for HF training:: 0.6879622936248779 seconds
+Time taken for MF training: 7.485509157180786 seconds
+---------------------------------------
+Time taken for LF training: 6.880126953125 seconds
+Time taken for HF training:: 0.6479270458221436 seconds
+Time taken for MF training: 7.530883073806763 seconds
+---------------------------------------

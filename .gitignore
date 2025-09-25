@@ -6,12 +6,10 @@ mf_npe/sbi-logs/
 *.egg-info/
 build/
 dist/
-data/
 data/SynapticPlasticity/
 data/SynapticPlasticity.zip
 data/L5PC/
 data/L5PC.zip
-data/OUprocess/
 data/OUprocess_full/
 data/OUprocess/3_dimensions/
 data/OUprocess/4_dimensions/

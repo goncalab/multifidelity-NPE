@@ -121,7 +121,7 @@ def configure_simulation(sim_name, custom_theta_dim):
         show_plots=True,
         CURR_TIME=datetime.now().strftime("%Y-%m-%d %Hh%M"),
         width_plots=400,
-        height_plots=200,
+        height_plots=400,
         axis_color='#6A798F',
         font_size=20,
         title_size=20,
