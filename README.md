@@ -74,8 +74,8 @@ python train.py \
  --models_to_run npe mf_npe \
  --simulator_task OUprocess \
  --lf_datasize 1000 \
- --hf_datasize 50 
- --n_true_xen 3 \
+ --hf_datasize 50 \
+ --n_true_xen 10 \
  --seed 12 \
  --n_net_inits 1
 ```
@@ -105,9 +105,9 @@ python eval.py \
  --models_to_run npe mf_npe \
  --simulator_task OUprocess \
  --lf_datasize 1000 \
- --hf_datasize 50
- --eval_metric c2st
- --n_true_xen 3 \
+ --hf_datasize 50 \
+ --eval_metric c2st \
+ --n_true_xen 10 \
  --seed 12 \
  --n_net_inits 1
 ```

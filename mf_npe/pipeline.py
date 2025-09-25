@@ -3,18 +3,10 @@ import pickle
 import time
 import torch
 import os
-from torch.nn import functional as F
-from botorch.acquisition import LogExpectedImprovement
-from botorch.optim import optimize_acqf
-from botorch.models import SingleTaskGP
-from botorch.models.transforms import Normalize
-from bayes_opt import BayesianOptimization
 import numpy as np
 from tqdm import tqdm
 from sbi.inference.posteriors.ensemble_posterior import EnsemblePosterior
 from mf_npe.flows.build_flows import build_zuko_flow
-from bayes_opt import acquisition
-
 # from mf_npe.flows.custom_ensemble_posterior import CustomEnsemblePosterior
 from mf_npe.flows.train_flows import XEncoder, fit_conditional_normalizing_flow,create_train_val_dataloaders, fit_pretrained_conditional_normalizing_flow
 # from mf_npe.plot.plot_gaussprocess import plot_bo_2d, plot_gp
@@ -243,8 +235,6 @@ class Pipeline():
                                         num_transforms=self.config_model['n_transforms'],
                                         num_bins=self.config_model['n_bins'],
                                         prior=self.hf_prior)
-            
-            print("direct_flow:", direct_flow)
                         
 
             optimizer = torch.optim.Adam(direct_flow.parameters(), lr=self.config_model['learning_rate'])

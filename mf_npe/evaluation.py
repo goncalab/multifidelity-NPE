@@ -419,8 +419,6 @@ class Evaluation(Pipeline):
             mean, ci = get_mean_ci(log_probs)
             raw_data = log_probs
             
-            print("aaaaaaaaaaaaa")
-            
         elif self.evaluation_metric == 'nrmse':
             # Get the posterior samples
             posterior_samples = self.get_posterior_samples(true_xen, true_thetas, posterior,
@@ -584,10 +582,6 @@ class Evaluation(Pipeline):
                 else:
                     posterior_samples_i = posterior_samples[i]
 
-                print("Squeezed posterior samples", posterior_samples_i)
-                
-                # Shape after squeeze
-                print("posterior samples shape after squeeze", posterior_samples[i].shape)
                 
                 # Check for NaNs
                 if torch.isnan(posterior_samples[i]).any():
