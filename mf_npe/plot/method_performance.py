@@ -182,9 +182,6 @@ def plot_methods_performance_paper(
             cell = df[(df['task'] == task) & (df['evaluation_metric'] == metric)]
             if not len(cell):
                 continue
-            
-
-
 
             if split:
                 c_amort = 2*tj + 1
