@@ -3,8 +3,7 @@ import time
 from mf_npe.methods.embedding import _generate_embedding_networks
 from mf_npe.methods.helpers import _write_time_file
 import torch
-from build.lib.mf_npe.flows.train_flows import fit_conditional_normalizing_flow
-from mf_npe.flows.train_flows import create_train_val_dataloaders
+from mf_npe.flows.train_flows import create_train_val_dataloaders, fit_conditional_normalizing_flow
 from mf_npe.flows.build_flows import build_zuko_flow
 from sbi.inference.posteriors.direct_posterior import DirectPosterior
 
