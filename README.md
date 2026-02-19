@@ -1,5 +1,7 @@
 # Multifidelity Simulation-based Inference for Computationally Expensive Simulators
-This repository is the official implementation of MF-NPE.
+Companion code to Anastasia N. Krouglova, Hayden R Johnson, Basile Confavreux, Michael Deistler, Pedro J. Goncalves, ICLR 2026, Multifidelity Simulation-based Inference for Computationally Expensive Simulators
+
+---
 
 Across many domains of science, stochastic models are an essential tool to understand the mechanisms underlying empirically observed data. Models can be of different levels of detail and accuracy, with models of high-fidelity (i.e., high accuracy) to the phenomena under study being often preferable. However, inferring parameters of high-fidelity models via simulation-based inference is challenging, especially when the simulator is computationally expensive. We introduce MF-(TS)NPE, a multifidelity approach to neural posterior estimation that uses transfer learning to leverage inexpensive low-fidelity simulations to efficiently infer parameters of high-fidelity simulators. MF-(TS)NPE applies the multifidelity scheme to both amortized and non-amortized neural posterior estimation. We further improve simulation efficiency by introducing A-MF-TSNPE, a sequential variant that uses an acquisition function targeting the predictive uncertainty of the density estimator to adaptively select high-fidelity parameters. On established benchmark and neuroscience tasks, our approaches require up to two orders of magnitude fewer high-fidelity simulations than current methods, while showing comparable performance. Overall, our approaches open new opportunities to perform efficient Bayesian inference on computationally expensive simulators.
 

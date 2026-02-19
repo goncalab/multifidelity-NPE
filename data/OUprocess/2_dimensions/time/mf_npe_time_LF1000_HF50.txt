@@ -26,3 +26,35 @@ Time taken for LF training: 9.575224876403809 seconds
 Time taken for MF training: 9.911937952041626 seconds
 Time taken for HF training: 0.3307070732116699 seconds
 ---------------------------------------
+Time taken for LF training: 7.245362758636475 seconds
+Time taken for MF training: 7.636255979537964 seconds
+Time taken for HF training: 0.3858671188354492 seconds
+---------------------------------------
+Time taken for LF training: 7.35910701751709 seconds
+Time taken for MF training: 7.755270004272461 seconds
+Time taken for HF training: 0.39083003997802734 seconds
+---------------------------------------
+Time taken for LF training: 7.192501068115234 seconds
+Time taken for MF training: 7.57620096206665 seconds
+Time taken for HF training: 0.37879490852355957 seconds
+---------------------------------------
+Time taken for LF training: 7.380476951599121 seconds
+Time taken for MF training: 7.7902281284332275 seconds
+Time taken for HF training: 0.40473508834838867 seconds
+---------------------------------------
+Time taken for LF training: 7.707385063171387 seconds
+Time taken for MF training: 8.102686166763306 seconds
+Time taken for HF training: 0.3899881839752197 seconds
+---------------------------------------
+Time taken for LF training: 7.567909002304077 seconds
+Time taken for MF training: 7.9887330532073975 seconds
+Time taken for HF training: 0.41533327102661133 seconds
+---------------------------------------
+Time taken for LF training: 6.899786472320557 seconds
+Time taken for MF training: 7.284570217132568 seconds
+Time taken for HF training: 0.3799748420715332 seconds
+---------------------------------------
+Time taken for LF training: 6.778854131698608 seconds
+Time taken for MF training: 7.172357082366943 seconds
+Time taken for HF training: 0.3885219097137451 seconds
+---------------------------------------

@@ -17,10 +17,7 @@ def create_train_val_dataloaders(
     domain_labels=None,  # Optional, for domain adaptation
     batch_size=200, # train batch size
 ):
-    # prior_mask_values = ones if round_ == 0 else zeros
-    # prior_mask_values((num_simulations, 1), dtype=torch.bool)
-    # Append for each round boolean whether samples are from prior.
-    
+
     num_examples = theta.shape[0]
     prior_masks = torch.ones_like(theta) 
     # domain_labels for adversarial loss: # 0 for source domain, 1 for target domain for pretraining

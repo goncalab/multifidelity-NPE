@@ -63,8 +63,6 @@ class GaussianBlob(Prior):
         n_to_plot = min(5, simulations.shape[0])
         fig, axs = plt.subplots(1, n_to_plot, figsize=(3 * n_to_plot, 3))
 
-        print("simulations shape", simulations.shape)  # e.g. torch.Size([100, 4096])
-
         # ensure axs is iterable even if n_to_plot == 1
         axs = np.atleast_1d(axs)
 

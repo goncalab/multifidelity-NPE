@@ -33,10 +33,8 @@ def run_one_experiment(seed, models_to_run,
                  n_true_xen=true_xen.shape[0],
                  seed=seed)
     
-    
-    print("task_setup:", task_setup.config_data)
+    print("data:", task_setup.config_data)
     pipeline = Pipeline(true_xen, task_setup)
-    
     
     if sim_name == 'MultiCompartmentalNeuron':
             for i, batch_size in enumerate(batch_lf_sims):
@@ -57,13 +55,9 @@ def run_one_experiment(seed, models_to_run,
         # This is for the old simulations
         simulations['lf'] = lf_data
         simulations['hf'] = hf_data
-        
-    
-    print("simulations", simulations)
-    
+            
     # get real n_sims of data trained on   
     n_lf_samples, n_hf_samples, n_mf_samples = get_n_samples(simulations)
-
 
     if b_load_model is False: 
         hf_posteriors = []
@@ -178,6 +172,6 @@ def run_comparison_lf_to_hf_posteriors(task_setup,
     # Compare LF and HF posterior distance/difference
     for metric in eval_metrics:
         evaluation = Evaluation(true_xen, task_setup, eval_metric=metric) # eval_metric is not used here, since we give a list of metrics below
-        df_one_seed = evaluation.compare_lf_hf_posteriors(metric, n_hf_sims=n_hf_samples, n_lf_sims=n_lf_samples, hf_posteriors=all_methods['mf_posteriors'], lf_posteriors=all_methods['lf_posteriors'], true_xen=true_xen, true_thetas=true_thetas, net_init=net_init, type_estimator='lf_and_hf_npe', simulator_name=simulator_name)
+        df_one_seed = evaluation.compare_lf_hf_posteriors(metric, n_hf_sims=n_hf_samples, n_lf_sims=n_lf_samples, hf_posteriors=all_methods['mf_posteriors'], lf_posteriors=all_methods['lf_posteriors'], true_xen=true_xen, true_thetas=true_thetas, net_init=net_init, inference_method='lf_and_hf_npe', simulator_name=simulator_name)
 
     return df_one_seed

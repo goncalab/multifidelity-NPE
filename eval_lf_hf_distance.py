@@ -46,29 +46,19 @@ def parse_args():
 
     return args
 
-
-
 def main():
     args = parse_args()
 
     main_path = f"./data/{args.simulator_task}/{args.theta_dim}_dimensions/models"
     
-    # Sort the strings so that the order does not matter
-    # when loading the model
-    # e.g., 'npe+mf_npe' and 'mf_npe+npe' are the same
+    # Sort the strings so that the order does not matter when loading the model
+    # e.g., 'npe+mf_npe' is processed in the same order as 'mf_npe+npe'
     models_str = '+'.join(sorted(args.models_to_run))
     lf_str = '+'.join(map(str, sorted(args.lf_datasize)))
     hf_str = '+'.join(map(str, sorted(args.hf_datasize)))
     
-    # Adjusts the path to the model file you requested
-    print("n of net inits", args.n_net_inits)
-    
-
     seed_max = args.seed + args.n_net_inits - 1
-    
-    print("seed max", seed_max)
-    
-        
+
     # Adjusts the path to the model file you requested
     if seed_max == args.seed:
         name = f"train_{models_str}_LF{lf_str}_HF{hf_str}_Ninits{args.n_net_inits}_seed{args.seed}"
@@ -84,7 +74,6 @@ def main():
     # Load pickle
     with open(file_path, "rb") as f:
         batch_train_data = pickle.load(f)
-    
     
     batch_df_results = pd.DataFrame()
         
@@ -111,18 +100,15 @@ def main():
         if true_xen.shape[0] != args.n_true_xen:
             raise ValueError(f"Number of true_xen in train ({true_xen.shape[0]}) does not match the number of true_xen in eval ({args.n_true_xen}).")
         
-
         # if net inits of eval and train are different, raise error
         if net_init != args.n_net_inits:
             raise ValueError(f"Number of network initializations in train ({net_init}) does not match the number of network initializations in eval ({args.n_net_inits}).")
-        
         
         # Raise error if n_lf_samples and n_hf_samples are not the same as the arguments passed
         if n_lf_samples != args.lf_datasize:
             raise ValueError(f"n_lf_samples {n_lf_samples} does not match the lf_datasize {args.lf_datasize} passed as argument.")
         if n_hf_samples != args.hf_datasize:
             raise ValueError(f"n_hf_samples {n_hf_samples} does not match the hf_datasize {args.hf_datasize} passed as argument.")
-
 
         # Run evaluation        
         df_results = run_comparison_lf_to_hf_posteriors(task_setup, 

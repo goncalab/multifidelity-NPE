@@ -9,7 +9,6 @@
 max_num_epochs=2**31 - 1, 
 batch_size = 200, 
 learning_rate= 5e-4, 
-type_estimator='npe', 
 device = process_device(),
 validation_fraction = 0.1, 
 patience=20, 

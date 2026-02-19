@@ -28,7 +28,7 @@ class PairPlot():
         self.n_samples_to_generate = 1000
 
 
-    def _plot_pairplot(self, posterior_samples, true_theta, type_estimator, n_train_sims, i): 
+    def _plot_pairplot(self, posterior_samples, true_theta, inference_method, n_train_sims, i): 
                                               
         fig, axes = analysis.pairplot(
                 posterior_samples,
@@ -38,7 +38,7 @@ class PairPlot():
                 points=true_theta,
                 points_offdiag={"markersize": 6},
                 points_colors="r",
-                title=f"method: {type_estimator} (n_sims: {n_train_sims})",
+                title=f"method: {inference_method} (n_sims: {n_train_sims})",
                 labels=[rf"$\theta_{d}$" for d in range(self.theta_dim)],
         )
         
@@ -47,14 +47,14 @@ class PairPlot():
         if not os.path.exists(path_paiplots):
             os.makedirs(path_paiplots)
             
-        plt.savefig(f"{path_paiplots}/{type_estimator}_{n_train_sims}_{i}.svg")
-        plt.savefig(f"{path_paiplots}/{type_estimator}_{n_train_sims}_{i}.pdf")
+        plt.savefig(f"{path_paiplots}/{inference_method}_{n_train_sims}_{i}.svg")
+        plt.savefig(f"{path_paiplots}/{inference_method}_{n_train_sims}_{i}.pdf")
 
         plt.close(fig)
         
 
 
-    def _plot_pairplot_lf_hf(self, posterior_samples, lf_posterior_samples, true_theta, type_estimator, n_train_sims):                                
+    def _plot_pairplot_lf_hf(self, posterior_samples, lf_posterior_samples, true_theta, inference_method, n_train_sims):                                
         fig, axes = analysis.pairplot(
                 [posterior_samples, lf_posterior_samples],
                 limits=self.hf_simulator.parameter_ranges(self.theta_dim),
@@ -63,7 +63,7 @@ class PairPlot():
                 points=true_theta,
                 points_offdiag={"markersize": 6},
                 points_colors="r",
-                title=f"method: {type_estimator} (n_sims: {n_train_sims})",
+                title=f"method: {inference_method} (n_sims: {n_train_sims})",
                 labels=[rf"$\theta_{d}$" for d in range(self.theta_dim)],
         )
         
@@ -72,12 +72,12 @@ class PairPlot():
         if not os.path.exists(path_pairplots):
             os.makedirs(path_pairplots)
             
-        fig.savefig(f"{path_pairplots}/lf_hf_{type_estimator}_{n_train_sims}_{self.config_data['type_lf']}.svg")
-        fig.savefig(f"{path_pairplots}/lf_hf_{type_estimator}_{n_train_sims}_{self.config_data['type_lf']}.pdf")
+        fig.savefig(f"{path_pairplots}/lf_hf_{inference_method}_{n_train_sims}_{self.config_data['type_lf']}.svg")
+        fig.savefig(f"{path_pairplots}/lf_hf_{inference_method}_{n_train_sims}_{self.config_data['type_lf']}.pdf")
 
 
         
-    def _plot_pairplot_with_true_posterior(self, posterior_samples, true_posterior_samples, true_theta, type_estimator, n_train_sims, name='true_comparison', simulator_name='simulator'):                                        
+    def _plot_pairplot_with_true_posterior(self, posterior_samples, true_posterior_samples, true_theta, inference_method, n_train_sims, name='true_comparison', simulator_name='simulator'):                                        
         if getattr(self.hf_simulator, "prior_ranges", None) is not None:
             limits = self.hf_simulator.parameter_ranges(self.theta_dim)
         else:
@@ -101,7 +101,7 @@ class PairPlot():
                 points=true_theta,
                 points_offdiag={"markersize": 6},
                 points_colors="r",
-                # title=f"method: {type_estimator} (n_sims: {n_train_sims})",
+                # title=f"method: {inference_method} (n_sims: {n_train_sims})",
                 title=f"{simulator_name})",
                 labels=[rf"$\theta_{d}$" for d in range(self.theta_dim)],
         )
@@ -110,8 +110,8 @@ class PairPlot():
         if not os.path.exists(path_pairplots):
             os.makedirs(path_pairplots)
             
-        fig.savefig(f"{path_pairplots}/{name}_{type_estimator}_{n_train_sims}.svg")
-        fig.savefig(f"{path_pairplots}/{name}_{type_estimator}_{n_train_sims}.pdf")
+        fig.savefig(f"{path_pairplots}/{name}_{inference_method}_{n_train_sims}.svg")
+        fig.savefig(f"{path_pairplots}/{name}_{inference_method}_{n_train_sims}.pdf")
 
 
     def _plot_conditional_pairplot(self, posterior, true_x):

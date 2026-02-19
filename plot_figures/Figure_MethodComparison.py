@@ -39,7 +39,7 @@ config_model = dict(
     max_num_epochs=2**31 - 1, # high number since we have early stopping
     batch_size = 200, # increasing the batch size will speed up the training, but the model will be less accurate
     learning_rate= 5e-4, # Learning rate for Adam optimizer
-    type_estimator='npe', # we always compute the posterior (npe), and do not evaluated likelihood or ratio methods (e.g., NLE, NRE)
+    inference_method='npe', # we always compute the posterior (npe), and do not evaluated likelihood or ratio methods (e.g., NLE, NRE)
     device = 'cpu', #process_device(),
     validation_fraction = 0.1, # Fraction of the data to use for validation
     patience=20, # The number of epochs to wait for improvement on the validation set before terminating training.
@@ -183,7 +183,7 @@ def load_and_evaluate_non_amortized_posteriors(post_path, eval_metric, sim_name)
                         "n_simulations": data['n_simulations'],
                         "n_lf": 0,
                         "n_hf": data['n_simulations'],
-                        "type_estimator": data['type_estimator'],
+                        "inference_method": data['inference_method'],
                         "file": item["file"],
                         "timestamp": item["timestamp"],
                     })
@@ -195,7 +195,7 @@ def load_and_evaluate_non_amortized_posteriors(post_path, eval_metric, sim_name)
             "n_simulations": data['n_simulations'],
             "n_lf": data['n_simulations'][0],
             "n_hf": data['n_simulations'][1],
-            "type_estimator": data['type_estimator'],
+            "inference_method": data['inference_method'],
             "file": item["file"],
             "timestamp": item["timestamp"],
         })
@@ -219,16 +219,16 @@ def load_and_evaluate_non_amortized_posteriors(post_path, eval_metric, sim_name)
     # Print the records
     print("Records loaded:", len(records))
     for record in records:
-        print(f"File: {record['file']}, Method: {record['type_estimator']}, LF: {record['n_lf']}, HF: {record['n_hf']}, Timestamp: {record['timestamp']}")
+        print(f"File: {record['file']}, Method: {record['inference_method']}, LF: {record['n_lf']}, HF: {record['n_hf']}, Timestamp: {record['timestamp']}")
 
     df_trials = pd.DataFrame(records)
     print("df_trials", df_trials)
-    unique_combinations = df_trials[["type_estimator", "n_lf", "n_hf"]].drop_duplicates()
+    unique_combinations = df_trials[["inference_method", "n_lf", "n_hf"]].drop_duplicates()
     df_all_evaluated = pd.DataFrame()
 
     for _, row in unique_combinations.iterrows():
         df_filtered = df_trials[
-            (df_trials["type_estimator"] == row["type_estimator"]) &
+            (df_trials["inference_method"] == row["inference_method"]) &
             (df_trials["n_lf"] == row["n_lf"]) &
             (df_trials["n_hf"] == row["n_hf"])
         ]
@@ -245,19 +245,19 @@ def load_and_evaluate_non_amortized_posteriors(post_path, eval_metric, sim_name)
             posterior_samples = evaluation.get_posterior_samples(df_filtered["true_x"].tolist(), 
                                                                 df_filtered["true_theta"].tolist(), 
                                                                 df_filtered["posterior"].tolist(), 
-                                                                row["type_estimator"], 
+                                                                row["inference_method"], 
                                                                 [row["n_lf"], row["n_hf"]],
                                                                 net_init)
             
             
-            if row["type_estimator"] == 'tsnpe':
+            if row["inference_method"] == 'tsnpe':
                 df_evaluated = evaluation.eval_ground_truth_available( 
                         true_xen=df_filtered["true_x"].tolist(),
                         metric=eval_metric,
                         posterior_samples=posterior_samples,
                         true_posterior_samples=true_posterior_samples,
                         n_simulations=row["n_hf"],
-                        type_estimator=row["type_estimator"]) 
+                        inference_method=row["inference_method"]) 
             else:
                 df_evaluated = evaluation.eval_ground_truth_available( 
                         true_xen=df_filtered["true_x"].tolist(),
@@ -265,15 +265,15 @@ def load_and_evaluate_non_amortized_posteriors(post_path, eval_metric, sim_name)
                         posterior_samples=posterior_samples,
                         true_posterior_samples=true_posterior_samples,
                         n_simulations=[row["n_lf"], row["n_hf"]],
-                        type_estimator=row["type_estimator"]) 
+                        inference_method=row["inference_method"]) 
         else:
-            if row["type_estimator"] == 'tsnpe':
+            if row["inference_method"] == 'tsnpe':
                 df_evaluated = evaluation.evaluate_no_ground_truth(
                     torch.stack(df_filtered["true_x"].tolist()),
                     torch.stack(df_filtered["true_theta"].tolist()),
                     df_filtered["posterior"].tolist(),
                     row["n_hf"],
-                    type_estimator=row["type_estimator"],
+                    inference_method=row["inference_method"],
                     net_init=net_init
                 )
             else:
@@ -282,7 +282,7 @@ def load_and_evaluate_non_amortized_posteriors(post_path, eval_metric, sim_name)
                     torch.stack(df_filtered["true_theta"].tolist()),
                     df_filtered["posterior"].tolist(),
                     [row["n_lf"], row["n_hf"]],
-                    type_estimator=row["type_estimator"],
+                    inference_method=row["inference_method"],
                     net_init=net_init
                 )
                 
@@ -290,7 +290,7 @@ def load_and_evaluate_non_amortized_posteriors(post_path, eval_metric, sim_name)
 
         df_evaluated["n_lf_simulations"] = row["n_lf"]
         df_evaluated["n_hf_simulations"] = row["n_hf"]
-        df_evaluated["algorithm"] = row["type_estimator"]
+        df_evaluated["algorithm"] = row["inference_method"]
 
         df_all_evaluated = pd.concat([df_all_evaluated, df_evaluated], ignore_index=True)
         
@@ -380,7 +380,7 @@ def plot_posteriors(n_true_x=3, net_init=9, method='a_mf_npe', n_samples=[10000,
 
     posterior_samples = data['posterior_samples']
     true_theta = data['true_theta']
-    type_estimator = data['type_estimator']
+    inference_method = data['inference_method']
     n_train_sims = data['n_train_sims']
 
     with open(f'{posterior_path}/true_thetas_{n_true_x}.p', 'rb') as f:
@@ -406,7 +406,7 @@ def plot_posteriors(n_true_x=3, net_init=9, method='a_mf_npe', n_samples=[10000,
         points_offdiag={"markersize": 6},
         points_colors="r",
         samples_colors=["#FFA15A", "b"],
-        title=f"method: {type_estimator} (n_sims: {n_train_sims})",
+        title=f"method: {inference_method} (n_sims: {n_train_sims})",
         labels=[rf"$\\theta_{{{d}}}$" for d in range(theta_dim)],
     )
     

@@ -12,19 +12,11 @@
 # >> python Appendix_histogram.py 
 
 
-
-# LOAD PICKLES
 from datetime import datetime
 import os
-import numpy as np
 import pandas as pd
-import mf_npe.task_setup as task_setup
 from mf_npe.utils.calculate_error import mean_confidence_interval
-from mf_npe.plot.method_performance import plot_methods_performance_paper
-
-import plotly.express as px
 import plotly.graph_objects as go
-import matplotlib.pyplot as plt
 from plotly.subplots import make_subplots
 
 

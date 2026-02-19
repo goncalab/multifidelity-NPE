@@ -28,7 +28,7 @@ class SimulationBasedCalibration():
         self.n_samples_to_generate = 1000
 
 
-    def run_sbc(self, posterior, type_estimator, n_simulations):
+    def run_sbc(self, posterior, inference_method, n_simulations):
         # Don't put it too low, since num_bins is default /20
         num_sbc_samples = 100 # 1000 #200
         num_posterior_samples = self.n_samples_to_generate        
@@ -63,7 +63,7 @@ class SimulationBasedCalibration():
         
         # Save a pickle with ranks
         save_dir = f"{self.main_path}/sbc"
-        name = f"sbc_{type_estimator}_{n_simulations}.p"
+        name = f"sbc_{inference_method}_{n_simulations}.p"
         dump_pickle(save_dir, name, rank_dic)
         
         fig, ax = sbc_rank_plot(ranks, num_posterior_samples, plot_type="cdf")
@@ -80,7 +80,7 @@ class SimulationBasedCalibration():
 
         
 
-    def run_sbc_lf_hf(self, posterior, lf_posterior, type_estimator, n_simulations):
+    def run_sbc_lf_hf(self, posterior, lf_posterior, inference_method, n_simulations):
         # Don't put it too low, since num_bins is default /20
         num_sbc_samples = 1000 # 1000 #200
         num_posterior_samples = self.n_samples_to_generate
@@ -186,7 +186,7 @@ class SimulationBasedCalibration():
             'num_posterior_samples': num_posterior_samples
         }
         
-        name = f"sbc_{type_estimator}_{n_simulations}.p"
+        name = f"sbc_{inference_method}_{n_simulations}.p"
         dump_pickle(save_dir, name, rank_dic)
         
         

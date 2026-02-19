@@ -171,7 +171,6 @@ def generate_train_data(simulate_train_data,
             lf_data = generate_train_data_over_batch_sizes(config_data, lf_simulator, batch_lf_sims, 'lf', path_to_pickles) 
         print("Training data is generated!")
     else:
-        print(f"Loading hf data")
         hf_data = load_train_data_over_batch_sizes('hf', batch_hf_sims, path_to_pickles, config_data)
         
         # if lf_data is a dictionary of simulators (multiple fidelities)
@@ -325,7 +324,7 @@ def true_posterior_comparison(diff_evaluation, main_path, config_data, CURR_TIME
                                   )
             
             # c2st evaluation over 30 true_xen in a dataframe for a particular gamma and mu_offset
-            analytical_df_c2st = diff_evaluation.evaluate_c2st(true_xen, true_lf_posterior_samples, true_posterior_samples, n_sims, type_estimator='true_comparison', gamma=gamma[i], mu_offset=mu_offset[j])
+            analytical_df_c2st = diff_evaluation.evaluate_c2st(true_xen, true_lf_posterior_samples, true_posterior_samples, n_sims, inference_method='true_comparison', gamma=gamma[i], mu_offset=mu_offset[j])
             
             # Append results: what was gamma, what was xto?
             df_all_variables = pd.concat([df_all_variables, analytical_df_c2st], ignore_index=True)

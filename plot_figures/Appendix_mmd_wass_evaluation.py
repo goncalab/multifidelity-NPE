@@ -100,7 +100,7 @@ else:
             posterior_samples=posterior_s,
             true_posterior_samples=true_posterior_s,
             n_simulations=item["n_sims"],
-            type_estimator=item["method"],
+            inference_method=item["method"],
             num_hifi_abc=n_hf_simulations,
         )
 

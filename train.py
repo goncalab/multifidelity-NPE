@@ -18,8 +18,7 @@ if platform.system() == "Darwin":
 
 
 ######## USAGE ########
-# python train.py --models_to_run mf_npe --simulator_task OUprocess --lf_datasize 1000 --hf_datasize 50 --n_true_xen 3 
-# 
+# python train.py --models_to_run npe mf_npe --simulator_task OUprocess --lf_datasize 1000 --hf_datasize 50 --n_true_xen 10 --seed 12 --n_net_inits 1
 # if you want to generate new training data and/or true data, add these flags:
 # --generate_true_xen --generate_train_data
 
@@ -129,7 +128,6 @@ def main():
         max_num_epochs=2**31 - 1, # high number since we have early stopping
         batch_size = 200, # increasing the batch size will speed up the training, but the model will be less accurate
         learning_rate= 5e-4, # Learning rate for Adam optimizer
-        type_estimator='npe', # we always compute the posterior (npe), and do not evaluated likelihood or ratio methods (e.g., NLE, NRE)
         device = process_device(),
         validation_fraction = 0.1, # Fraction of the data to use for validation
         patience=20, # The number of epochs to wait for improvement on the validation set before terminating training.
@@ -149,10 +147,7 @@ def main():
         n_ensemble_members = 5, # put to 2 for 10**5, but it back for all the others
         )
 
-    # Call your experiment function 
-    
     train_data_over_n_inits = []
-    
     seed_max = args.seed + args.n_net_inits - 1
 
     for net_init in range(args.n_net_inits):
@@ -160,9 +155,6 @@ def main():
         seed = args.seed + net_init
         set_global_seed(seed)
         
-         # Increment seed for each network initialization.
-        print("seed for this network initialization:", seed)
-
         # Run the experiment
         train_data = run_one_experiment(seed=seed,
                         models_to_run=args.models_to_run,
@@ -179,7 +171,6 @@ def main():
                         net_init=args.n_net_inits,
                         b_load_model=args.load_model)
         
-        print("train data computed!")
         train_data_over_n_inits.append(train_data)
 
         # Save the trained models    
@@ -187,8 +178,6 @@ def main():
         lf_str = '+'.join(map(str, sorted(args.lf_datasize)))
         hf_str = '+'.join(map(str, sorted(args.hf_datasize)))
         
-        
-
     # Adjusts the path to the model file you requested
     if seed_max == args.seed:
         name = f"train_{models_str}_LF{lf_str}_HF{hf_str}_Ninits{args.n_net_inits}_seed{args.seed}.pkl"
@@ -199,23 +188,6 @@ def main():
 
     print("pickle of trained models saved at", f'{main_path}/{name}')
 
+
 if __name__ == '__main__':
-    # Make macOS happy if anything tries to spawn workers under the hood
-    import multiprocessing as mp
-    try:
-        mp.set_start_method("spawn", force=True)
-    except RuntimeError:
-        pass
-
-    # Optional: PyTorch-specific guards (safe even if torch isn't used)
-    try:
-        import torch
-        torch.multiprocessing.set_start_method("spawn", force=True)
-        torch.set_num_threads(1)
-        torch.set_num_interop_threads(1)
-        # Work around shared memory/semaphore quirks on macOS
-        torch.multiprocessing.set_sharing_strategy("file_system")
-    except Exception:
-        pass
-
     main()

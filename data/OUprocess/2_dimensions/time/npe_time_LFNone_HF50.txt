@@ -4,3 +4,21 @@ Time taken for HF training: 1.2175428867340088 seconds
 ---------------------------------------
 Time taken for HF training: 1.0346589088439941 seconds
 ---------------------------------------
+Time taken for HF training: 1.312898874282837 seconds
+---------------------------------------
+Time taken for HF training: 1.0446181297302246 seconds
+---------------------------------------
+Time taken for HF training: 1.2489137649536133 seconds
+---------------------------------------
+Time taken for HF training: 1.2806830406188965 seconds
+---------------------------------------
+Time taken for HF training: 1.340043067932129 seconds
+---------------------------------------
+Time taken for HF training: 1.2970759868621826 seconds
+---------------------------------------
+Time taken for HF training: 0.7004799842834473 seconds
+---------------------------------------
+Time taken for HF training: 0.704918622970581 seconds
+---------------------------------------
+Time taken for HF training: 0.6931841373443604 seconds
+---------------------------------------

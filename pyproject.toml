@@ -7,7 +7,7 @@ name = "mf_npe"
 version = "0.1.1"
 description = "Multifidelity NPE"
 authors = [
-    { name = "Anonymous for review", email = "anonymous@gmail.com"},
+    { name = "Anastasia Nastya Krouglova", email = "nastyakrouglova@gmail.com"},
 ]
 dependencies = [
     "sbi==0.25.0",

@@ -73,11 +73,11 @@ class PPC():
             fig.show()
         
 
-    def _posterior_predictive_check(self, posterior_samples, x_o, full_trace_true, type_estimator, n_train_sims, i):
+    def _posterior_predictive_check(self, posterior_samples, x_o, full_trace_true, inference_method, n_train_sims, i):
         if self.task == 'task1' or self.task == 'task6':
             x_pp = self.hf_simulator.simulator(abs(posterior_samples))         
             print("x_pp", x_pp.shape)   
-            self.plot_ppc_timeseries(x_pp, self.config_data, x_o, f'PPC {type_estimator}, n_sims {n_train_sims}', self.main_path)
+            self.plot_ppc_timeseries(x_pp, self.config_data, x_o, f'PPC {inference_method}, n_sims {n_train_sims}', self.main_path)
         elif self.task == 'task2':
             print("posterior_samples", posterior_samples.shape)
             posterior_samples = posterior_samples[:20]
@@ -91,8 +91,8 @@ class PPC():
             I_inj = add_ons['inj_current']
             
             plot_xen_histogram(x_pp, 'PPC task 2', x_o)
-            plot_CompNeuron_xen(x_o, I_inj, full_traces, self.config_data['dt'], f'PPC {type_estimator}, n_sims: {n_train_sims}',
-                                type_estimator, n_train_sims, i, self.main_path, true_x_trace=full_trace_true)
+            plot_CompNeuron_xen(x_o, I_inj, full_traces, self.config_data['dt'], f'PPC {inference_method}, n_sims: {n_train_sims}',
+                                inference_method, n_train_sims, i, self.main_path, true_x_trace=full_trace_true)
         elif self.task == 'task3':
             path_simulations = ''
             
