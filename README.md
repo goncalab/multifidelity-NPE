@@ -129,7 +129,7 @@ The supported options for the following arguments are:
 
 > **Note:** If you want to generate new data samples, add the following flags `--generate_true_xen` or `--generate_train_data` respectively for true observation and train data.
 
-> **Note:** `c2st`, `mmd`, `wasserstein` are only for toy examples (when a ground truth is known). and wasserstein distance is a slow evaluation metric.
+> **Note:** Use `c2st`, `mmd`, `wasserstein` only for benchmarking tasks with a ground truth posterior. Overall, the wasserstein distance is observed to be computationally much slower than `c2st` and `mmd`.
 
 
 # Pre-trained models

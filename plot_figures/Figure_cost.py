@@ -21,7 +21,6 @@ config_model = dict(
     max_num_epochs=2**31 - 1, # high number since we have early stopping
     batch_size = 200, # increasing the batch size will speed up the training, but the model will be less accurate
     learning_rate= 5e-4, # Learning rate for Adam optimizer
-    type_estimator='npe', # we always compute the posterior (npe), and do not evaluated likelihood or ratio methods (e.g., NLE, NRE)
     device = 'cpu', #process_device(),
     validation_fraction = 0.1, # Fraction of the data to use for validation
     patience=20, # The number of epochs to wait for improvement on the validation set before terminating training.

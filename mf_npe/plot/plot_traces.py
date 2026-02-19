@@ -114,7 +114,7 @@ def plot_OU_xen(true_xen, lf_xen, full_trace, config_data, path_to_save):
         fig.show()
     
 
-def plot_CompNeuron_xen(true_xen, I_curr, full_trace, dt, title, type_estimator, n_train_sims, i, path_to_save, true_x_trace=None):  
+def plot_CompNeuron_xen(true_xen, I_curr, full_trace, dt, title, inference_method, n_train_sims, i, path_to_save, true_x_trace=None):  
     max_n_traces = 10 # max n of traces to plot
     type_x = 'xen'
     n_traces = len(true_xen)
@@ -170,8 +170,8 @@ def plot_CompNeuron_xen(true_xen, I_curr, full_trace, dt, title, type_estimator,
     path_plot = f"{path_to_save}/plot_traces"
     if not os.path.exists(path_plot):
         os.makedirs(path_plot)   
-    fig.write_image(f"{path_plot}/{type_x}{type_estimator}{n_train_sims}_{i}.svg")
-    fig.write_html(f"{path_plot}/{type_x}{type_estimator}{n_train_sims}_{i}.html")
+    fig.write_image(f"{path_plot}/{type_x}{inference_method}{n_train_sims}_{i}.svg")
+    fig.write_html(f"{path_plot}/{type_x}{inference_method}{n_train_sims}_{i}.html")
         
     if plot_config.show_plots:
         fig.show()
