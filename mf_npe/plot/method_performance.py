@@ -16,9 +16,8 @@ def plot_methods_performance_paper(
        'mean','ci_min','ci_max']
     """
     
-    show_legend = False
+    show_legend = True
 
-    # ---- 1) Which metrics & tasks (ordered) ----
     metric_order = ['c2st', 'mmd', 'wasserstein', 'nltp', 'nrmse']
     
     print("df in plotmethod", df)
@@ -50,7 +49,7 @@ def plot_methods_performance_paper(
     width  = task_setup.width_plots  * len(tasks) * 2.2  / 2  # mild scale
     height = task_setup.height_plots * n_rows
 
-    # Only title the *left* col of each task pair; (visually looks like your screenshot)
+    # Only title the *left* col of each task pair;
     titles = []
     for r in range(n_rows):
         for t_idx, tname in enumerate(tasks):
@@ -64,12 +63,12 @@ def plot_methods_performance_paper(
     
     
 
-    # ---- 3) Colors (yours) ----
+    # Colors
     mf_colors      = ['#B6E880', '#19D3F3', '#198AF3', '#FF6692',  '#FFA15A']
     a_tsnpe_colors = ['#890909', '#F65109', ]
     tsnpe_colors   = [ '#FFA15A'] # '#FFA15A',
 
-    # ---- 4) Helpers that draw traces for a (task, metric) slice ----
+    # Traces
     def add_amortized_traces(cell, row, col, showlegend=False):
         oracle_df = cell[cell['algorithm'] == 'sbi_npe']
         hf_df     = cell[cell['algorithm'] == 'npe']
@@ -177,12 +176,15 @@ def plot_methods_performance_paper(
 
     split = bool(plot_amortized_and_non_amortized_seperately)
     
-    # ---- 5) Populate grid: for each metric row, every task contributes two side-by-side panels ----
+    # For each metric row, every task contributes two side-by-side panels
     for r, metric in enumerate(metrics, start=1):
         for tj, task in enumerate(tasks):
             cell = df[(df['task'] == task) & (df['evaluation_metric'] == metric)]
             if not len(cell):
                 continue
+            
+
+
 
             if split:
                 c_amort = 2*tj + 1
@@ -196,19 +198,8 @@ def plot_methods_performance_paper(
                 # overlay both families into the same subplot
                 add_amortized_traces(cell, row=r, col=c, showlegend=showlegend_here)
                 add_non_amortized_traces(cell, row=r, col=c, showlegend=False)
-    # for r, metric in enumerate(metrics, start=1):
-    #     for tj, task in enumerate(tasks):
-    #         c_amort = 2*tj + 1
-    #         c_non   = 2*tj + 2
-    #         cell = df[(df['task'] == task) & (df['evaluation_metric'] == metric)]
-    #         if not len(cell):
-    #             continue
-    #         showlegend_amort = (r == 1 and tj == 0)  # top-left only
-    #         showlegend_non   = (r == 1 and tj == 0)  # include non-amortized legends too
-    #         add_amortized_traces(cell, row=r, col=c_amort, showlegend=showlegend_amort)
-    #         add_non_amortized_traces(cell, row=r, col=c_non,   showlegend=showlegend_non)
 
-    # ---- 6) Axes styling ----
+    
     metric_titles = {'c2st': 'C2ST', 'nltp': 'NLTP', 'wasserstein': 'Wasserstein',
                      'mmd': 'MMD', 'nrmse': 'NRMSE'}
     
@@ -228,21 +219,21 @@ def plot_methods_performance_paper(
                 xanchor="center", yanchor="bottom",
                 font=dict(size=task_setup.title_size, color='#000000', family='Arial')
             )
-        else:
-            for tj, tname in enumerate(tasks):
-                c = tj + 1
-                xax, _ = fig.get_subplot(1, c)
-                d = xax.domain
-                x_mid = (d[0] + d[1]) / 2.0
-                fig.add_annotation(
-                    xref="paper", yref="paper", x=x_mid, y=y_top,
-                    text=f"<b>{tname}</b>", showarrow=False,
-                    xanchor="center", yanchor="bottom",
-                    font=dict(size=task_setup.title_size, color='#000000', family='Arial')
-                )
+    else:
+        for tj, tname in enumerate(tasks):
+            c = tj + 1
+            xax, _ = fig.get_subplot(1, c)
+            d = xax.domain
+            x_mid = (d[0] + d[1]) / 2.0
+            fig.add_annotation(
+                xref="paper", yref="paper", x=x_mid, y=y_top,
+                text=f"<b>{tname}</b>", showarrow=False,
+                xanchor="center", yanchor="bottom",
+                font=dict(size=task_setup.title_size, color='#000000', family='Arial')
+            )
     
         
-    # --- custom spacing: small gap within a pair, big gap between pairs ---
+    # Custom spacing: small gap within a pair, big gap between pairs
     K = len(tasks)           # number of task pairs
     n_cols = 2 * K
 
@@ -270,7 +261,7 @@ def plot_methods_performance_paper(
         for c in range(1, n_cols + 1):
             fig.update_xaxes(domain=col_domains[c - 1], row=r, col=c, tickangle=-90)
 
-    # x-axes: log scale everywhere; ticks only on bottom row
+    # x-axes: log scale everywhere; ticks only on bottom row    
     for r in range(1, n_rows+1):
         show_xticks = (r == n_rows)
         for c in range(1, n_cols+1):
@@ -398,8 +389,7 @@ def plot_methods_performance_paper(
                                         row=r, col=c)
 
             # important: skip the generic y-axis application for MMD below
-            continue   
-            #ya.update(dict(range=[0.0, 0.48], zeroline=True, zerolinewidth=2, zerolinecolor="#DEE3EA",))
+            # continue   
         elif metric == 'nrmse':
             ya['autorangeoptions_clipmin'] = 0.0
 
@@ -412,12 +402,12 @@ def plot_methods_performance_paper(
     # Shared bottom x-label (centered)
     fig.add_annotation(
         text="Number of high-fidelity simulations",
-        xref="paper", yref="paper", x=0.5, y=-0.2, showarrow=False,
+        xref="paper", yref="paper", x=0.5, y=-0.30, showarrow=False,
         font=dict(size=task_setup.title_size)
     )
     
 
-    # ---- 7) Layout & save ----
+    # Layout
     title_text = "" if sim_name is None else f"{sim_name}"
     fig.update_layout(
         autosize=False,
@@ -425,7 +415,7 @@ def plot_methods_performance_paper(
         height=height,
         plot_bgcolor='#fff',
         paper_bgcolor='#fff',
-        margin=dict(l=10, r=10, b=10, t=70),
+        margin=dict(l=10, r=10, b=80, t=70),
         font_color=task_setup.axis_color,
         showlegend=show_legend,
         legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='left', x=0),
@@ -452,151 +442,4 @@ def plot_methods_performance_paper(
     return fig
 
 
- 
-# def plot_MI_performance_paper(mf_df, sim_name, type_lf, evaluation_metric, task_setup, axes, npe_val):  
-#     """Plot the evaluation across different number of HF simulations for different methods.
-    
-#         Supported evaluation metrics are 'c2st', 'wasserstein', 'mmd', and 'nltp'.
-
-#     Args:
-#         df (_type_): _description_
-#         sim_name (_type_): _description_
-#         lf_simulations (_type_): _description_
-#         evaluation_metric (_type_): _description_
-#         task_setup (_type_): _description_
-#     """
-#     fig = go.Figure()
-    
-#     # Setup
-#     width=task_setup.width_plots
-#     height=task_setup.height_plots
-    
-#     marker_size = 10
-    
-#     ax0 = axes[0]
-#     ax1 = axes[1]
-        
-#     if axes[0] == 'c2st': 
-#         ax0 = 'mean'
-#     if axes[0] == 'mi':
-#         ax0 = 'UC_MINE'
-#         fig.update_xaxes(
-#             tickmode='array',
-#             tickvals=[0, 0.05, 0.1, 0.15, 0.2],
-#             ticktext=["0", "0.05", "0.1", "0.15", "0.2"]
-#         )
-    
-#     if axes[1] == 'c2st':
-#         ax1 = 'mean'
-#     if axes[1] == 'mi':
-#         ax1 = 'UC_MINE'
-    
-#     fig.add_hline(
-#         y=npe_val,
-#         line_width=2,
-#         line_dash="dash",  # Other options: "dash", "dot", etc.
-#         line_color="black"
-#     )
-    
-
-#     # MF NPE    
-#     for i, type_lf in enumerate(type_lf):
-#         c_mf_df = mf_df.loc[mf_df['type_lf'] == type_lf]     
-        
-#         if axes[1] == 'c2st':           
-#             fig.add_trace(go.Scatter(x=c_mf_df[ax0],   # c_mf_df['noise'],
-#                                     y=c_mf_df[ax1], # c_mf_df['mean'],
-#                                     # name=f"MF-NPE{int(np.log10(n_lf))}",
-#                                     marker=dict(
-#                                         # color= f"{mf_colors[i]}",
-#                                         size=marker_size,
-#                                     ),
-#                                     error_y=dict(
-#                                         type='data',
-#                                         symmetric=False,
-#                                         #thickness=5,
-#                                         array=c_mf_df['ci_max'],
-#                                         arrayminus=abs(c_mf_df['ci_min'])
-#                                     )))
-#         else:
-#             # No errorbar from c2st
-#             fig.add_trace(go.Scatter(x=c_mf_df[ax0],   # c_mf_df['noise'],
-#                         y=c_mf_df[ax1], # c_mf_df['mean'],
-#                         # name=f"MF-NPE{int(np.log10(n_lf))}",
-#                         marker=dict(
-#                                 # color= f"{mf_colors[i]}",
-#                                 size=marker_size,
-#                         )))
-
-        
-#     fig.update_xaxes(showgrid=False, dtick = 1, title_text=f"Number of HF simulations", title_font_size=task_setup.title_size)
-    
-#     if axes[1] == 'c2st':
-#         fig.update_yaxes(range=[0.49,1.01], 
-#                          showgrid=True, gridwidth=task_setup.gridwidth, gridcolor='#E5ECF6',
-#                          title_text="C2ST", 
-#                          title_font_size=task_setup.font_size) 
-#     elif axes[1] == 'mi':
-#         fig.update_yaxes(title_text='$\text{Uncertainty Quantification }(MI/H_{HF}$)', 
-#                          showgrid=True, gridwidth=task_setup.gridwidth, gridcolor='#E5ECF6',
-#                          title_font_size=task_setup.title_size)
-#     else:
-#         fig.update_yaxes(title_text=f'{axes[1]}', 
-#                          showgrid=True, gridwidth=task_setup.gridwidth, gridcolor='#E5ECF6',
-#                          title_font_size=task_setup.title_size)
-#     fig.update_layout(autosize=False,
-#                           width=width,
-#                           height=height,
-#                           plot_bgcolor='#fff',
-#                           margin=dict(
-#                                 l=0,
-#                                 r=10,
-#                                 b=0,
-#                                 t=50,
-#                                 pad=4
-#                             ),
-#                           font_color=task_setup.axis_color,
-#                           showlegend=False,
-#                           title_text=f"{sim_name}", 
-#                           title_x=0.5, 
-#                           title_y=0.97, 
-#                           title_font_size=task_setup.font_size)
-    
-#     fig.update_xaxes(
-#         tickangle=0,
-#         title_text=f"{axes[0]}",
-#         title_standoff=10,
-#         tickfont=dict(
-#             family="Arial",
-#             size=task_setup.font_size,
-#             color='#2A3F5F'
-#         ),
-#         showgrid=False,
-#         dtick=1
-#     )
-#     fig.update_yaxes(zeroline=True, 
-#                      # title_font_color="red",
-#                      linewidth=1,
-#                      tickfont=dict(
-#                         color='#2A3F5F',  # Set the color of numbers on the x-axis
-#                         size=task_setup.font_size,       # Optional: Set font size
-#                         family="Arial" # Optional: Set font family
-#                     ),
-#                     )
-    
-#     path_plots = f'{task_setup.main_path}/MI/plots'
-
-#     if not os.path.exists(path_plots):
-#         os.makedirs(path_plots)
-#     fig.write_image(f"{path_plots}/{evaluation_metric} {task_setup.CURR_TIME}.svg")
-#     fig.write_html(f"{path_plots}/{evaluation_metric} {task_setup.CURR_TIME}.html")
-    
-#     if task_setup.show_plots:
-#         fig.show()
-        
-#     print(f"image saved at {path_plots}")
-    
-#     return fig
- 
-     
     

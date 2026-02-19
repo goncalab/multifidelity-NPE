@@ -134,6 +134,10 @@ class SLCP(Prior):
         loaded_simulations = pickle.load(open_pickles_simulations)
         
         true_add_ons = loaded_simulations['true_add_ons']
+        
+        if 'reference_posterior_samples' not in true_add_ons:
+            raise ValueError(f"reference_posterior_samples not found in true_add_ons for SLCP. Make sure that 1) the true_xen from the original OSF directory are used, 2) the path to the true posterior is correct.")
+        
         true_posterior_samples = true_add_ons['reference_posterior_samples']
         
         # Transpose true_posterior_samples to have shape (n_true_xen, n_true_observation_samples, theta_dim)

@@ -20,7 +20,7 @@ if platform.system() == "Darwin":
 ######## USAGE ########
 # python train.py --models_to_run npe mf_npe --simulator_task OUprocess --lf_datasize 1000 --hf_datasize 50 --n_true_xen 10 --seed 12 --n_net_inits 1
 # if you want to generate new training data and/or true data, add these flags:
-# --generate_true_xen --generate_train_data
+# --generate_true_data --generate_train_data
 
 
 def parse_args():
@@ -35,7 +35,7 @@ def parse_args():
     parser.add_argument('--n_true_xen', type=int, default=None) 
     parser.add_argument('--n_net_inits', type=int, default=1) # in paper, typically 10
     parser.add_argument('--load_model', action='store_true')
-    parser.add_argument('--generate_true_xen', action='store_true', default=False) # Load the true xen data
+    parser.add_argument('--generate_true_data', action='store_true', default=False) # Load the true data
     parser.add_argument('--generate_train_data', action='store_true', default=False) # Load the training data
     
     args = parser.parse_args()
@@ -118,7 +118,7 @@ def main():
         n_true_xen=args.n_true_xen,
         lf_datasize=args.lf_datasize,
         hf_datasize=args.hf_datasize,
-        gener_true_xen=args.generate_true_xen,
+        gener_true_xen=args.generate_true_data,
         gener_train_data=args.generate_train_data
     )
     

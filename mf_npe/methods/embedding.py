@@ -37,7 +37,7 @@ def _generate_embedding_networks(self, x_lf=None, x_hf=None):
 
     if x_hf is not None:
         if self.x_dim_hf != x_hf.shape[1]:
-            raise ValueError(f"HF data has {x_hf.shape[1]} features, but {self.x_dim_hf} were expected. Try to regenerate the data (by adding --generate_true_xen and --generate_train_data to the train.py command) or change the x_dim_hf parameter.")
+            raise ValueError(f"HF data has {x_hf.shape[1]} features, but {self.x_dim_hf} were expected. Try to regenerate the data (by adding --generate_true_data and --generate_train_data to the train.py command) or change the x_dim_hf parameter.")
 
     embedding_lf = build(self.type_embedding_lf, self.x_dim_hf, "lf")
     embedding_hf = build(self.type_embedding_hf, self.x_dim_hf, "hf")
