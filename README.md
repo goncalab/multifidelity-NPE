@@ -40,9 +40,8 @@ conda activate mf_npe
 pip install -e .
 ```
 
-In case you don't have conda, follow the following procedure:
+In case you don't have conda, follow the following procedure (after downloading and installing python3.10 from one of the available repos):
 
-Download and install python3.10 from one of the available repos.
 ```
 git clone https://github.com/goncalab/multifidelity-NPE
 cd multifidelity-NPE
