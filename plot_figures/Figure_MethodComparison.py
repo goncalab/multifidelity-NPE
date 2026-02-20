@@ -437,7 +437,7 @@ if __name__ == "__main__":
 
                 ######### AMORTIZED #########
                 # Put to load_from_eval when evaluating for the first time
-                load_from_eval = True # Keep on false, otherwise the true stuff disapplears for L5PC, idk. why.
+                load_from_eval = True # Keep on false, otherwise the true results disapplears for L5PC.
                 if load_from_eval:
                     df_amortized = load_from_eval_file(eval_models_path, eval_metric)
                 else:    
@@ -483,16 +483,12 @@ if __name__ == "__main__":
                 print("df from_eval", df_from_eval)
                 # algorithm: all unique algorithms in df_from_eval
                 algorithms = df_from_eval['algorithm'].unique()
-                print("algorithm", algorithms)
                 #  LF simulations: all unique LF simulations in df_from_eval
                 lf_sims = df_from_eval['n_lf_simulations'].unique()
-                print("lf_sims", lf_sims)
                 #  HF simulations: all unique HF simulations in df_from_eval
                 hf_sims = df_from_eval['n_hf_simulations'].unique()
-                print("hf_sims", hf_sims)
                 
-                fname = make_eval_filename(eval_metric, algorithms, lf_sims, hf_sims)
-                print("fname", fname)   
+                fname = make_eval_filename(eval_metric, algorithms, lf_sims, hf_sims)  
 
                 # Save this file as eval file
                 with open(f"{eval_models_path}/{fname}", "wb") as f:
