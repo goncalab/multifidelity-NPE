@@ -1,5 +1,5 @@
 # Multifidelity Simulation-based Inference for Computationally Expensive Simulators
-Companion code to Anastasia N. Krouglova, Hayden R Johnson, Basile Confavreux, Michael Deistler, Pedro J. Goncalves, ICLR 2026, Multifidelity Simulation-based Inference for Computationally Expensive Simulators
+Companion code to Anastasia N. Krouglova, Hayden R Johnson, Basile Confavreux, Michael Deistler, Pedro J. Goncalves, ICLR 2026, Multifidelity Simulation-based Inference for Computationally Expensive Simulators.
 
 ---
 
@@ -159,10 +159,10 @@ The supported options for the following arguments are:
 - **task**: `OUprocess`, `SIR`, `L5PC`, `GaussianBlob`, `L5PC`, `SynapticPlasticity`
 - **eval_metric**: `c2st`, `mmd`, `wasserstein`, `nltp`, `nrmse`
 
-This script generates the figure in both .svg (vector format) and .html (interactive format, which is useful for inspecting exact values by hovering in a web browser). Upon completion, the script will print the location where the figure is saved.
+This script generates the figure in both .svg (vector format) and .html (interactive format, which is useful for inspecting exact values by hovering in a web browser). 
 
-Three main figures from the paper are the following:
-![MF-NPE visualization](plot_figures/readme_addons/results_readme.png)
+The script will also print the location where the figure is saved, which regenerates the following results:
+![MF-NPE benchmark](plot_figures/readme_addons/benchmark_readme.png)
 
 
 
