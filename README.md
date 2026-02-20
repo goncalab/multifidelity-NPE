@@ -39,14 +39,24 @@ conda activate mf_npe
 ```bash
 pip install -e .
 ```
-🔁 If you make changes to the package, re-run the above command to rebuild it.
+
+In case you don't have conda, follow the following procedure:
+
+Download and install python3.10 from one of the available repos.
+```
+git clone https://github.com/goncalab/multifidelity-NPE
+cd multifidelity-NPE
+. python3.10 -m venv .
+source .venv/bin/activate
+pip install -e . 
+```
 
 
 ## Dataset
 To ensure reproducibility of our results, we provide the exact dataset used in the paper.
 The data to reproduce the OUprocess for two dimensions results are provided together with the code, and can immediately be tested within the current repository. 
 
-We also provide all other data used to reproduce the results from the L5PC neuron, Synaptic Plasticity task and additional benchmarks, wich can be downloaded with the following link:
+We also provide all other data used to reproduce the results from the L5PC neuron, Synaptic Plasticity task and additional benchmarks, wich should be downloaded with the following link:
 [Download from OSF](https://osf.io/afxeg/?view_only=3be385a619cb4bff955ce06d1df95d03).
 After downloading, place the datasets into the `data/` directory at the top level of the project.
 Your project directory should then be organized as follows:
@@ -139,7 +149,7 @@ You can download the data from OSF using the following link: [Download from OSF]
 
 
 # Results
-Run the following command to reproduce the main figures from the paper, where the performance is compared with respect to the number of high-fidelity simulations used for training:
+Run the following command to reproduce the main figures from the paper, where the performance is compared with respect to the number of high-fidelity simulations used for training (make sure to have the SIR and SLCP model downloaded from OSF).
 
 ```bash
 cd plot_figures
@@ -150,7 +160,7 @@ The supported options for the following arguments are:
 - **task**: `OUprocess`, `SIR`, `L5PC`, `GaussianBlob`, `L5PC`, `SynapticPlasticity`
 - **eval_metric**: `c2st`, `mmd`, `wasserstein`, `nltp`, `nrmse`
 
-This script generates the figure in both .svg (vector format, ideal for publications) and .html (interactive format, useful for inspecting exact values by hovering in a web browser). Upon completion, the script will print the location where the figure is saved.
+This script generates the figure in both .svg (vector format) and .html (interactive format, which is useful for inspecting exact values by hovering in a web browser). Upon completion, the script will print the location where the figure is saved.
 
 Three main figures from the paper are the following:
 ![MF-NPE visualization](plot_figures/readme_addons/results_readme.png)

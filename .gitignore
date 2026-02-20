@@ -10,12 +10,11 @@ data/SynapticPlasticity/
 data/SynapticPlasticity.zip
 data/L5PC/
 data/L5PC.zip
-data/OUprocess_full/
+data/OUprocess_full_osf/
+data/OUprocess_full_osf.zip
 data/OUprocess/3_dimensions/
 data/OUprocess/4_dimensions/
 data/OUprocess/noise_tl/
-data/OUprocess.zip
-data/
 data/figma_exports/
 data/illustrator/
 data/SIR/
@@ -26,6 +25,7 @@ mf_npe/active_learning_results/
 mf_npe/al_results/
 mf_npe/sbi-logs/
 sbi-logs/
+data/combined_plots/
 
 # Pycache
 **/__pycache__/
