@@ -30,10 +30,11 @@ def _generate_embedding_networks(self, x_lf=None, x_hf=None):
             )
             
             return embedding_net
-        
-        raise ValueError(
-            f"Unknown type_embedding_{which}: {kind}. Choose 'xEncoder' or 'identity'."
-        )
+        else:
+            raise ValueError(
+                f"Unknown type_embedding_{which}: {kind}. Choose 'xEncoder' or 'identity'."
+            )
+      
 
     if x_hf is not None:
         if self.x_dim_hf != x_hf.shape[1]:
