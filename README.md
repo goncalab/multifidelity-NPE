@@ -1,7 +1,7 @@
 # Multifidelity Simulation-based Inference for Computationally Expensive Simulators
 Anastasia N. Krouglova, Hayden R Johnson, Basile Confavreux, Michael Deistler, Pedro J. Goncalves, ICLR 2026. 
 
-[Read the official paper:](https://openreview.net/pdf?id=bj0dcKp9t6)
+[Read the official paper](https://openreview.net/pdf?id=bj0dcKp9t6)
 
 ---
 
