@@ -106,14 +106,22 @@ def generate_true_data(simulate_true_data,
                        path_to_pickles, 
                        n_true_xen,
                        hf_simulator,
-                       config_data):
+                       config_data, task):
     """Main class for generating low and high fidelity true data (observations)
 
     Returns:
         arrray: Array of dictionaries of logit transformed data for numerical stability.
     """
+
+    if task in ['SLCP', 'LotkaVolterra', 'SIR']:
+        print(f"Returning true_observations from SBIBM reference samples (max 10 true_xen). Since the code does not support the generation of true observations for these tasks.")
+        simulate_true_data = False # we set this to false because the true data is already generated and stored in the data folder. We just need to load it.
+
+
     
     if simulate_true_data:
+        
+        # If SIR, SLCP
         n_simulations = n_true_xen
         
         # Generate true data

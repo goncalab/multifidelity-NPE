@@ -94,7 +94,8 @@ def load_task_setup_and_data(simulator_task, theta_dim, n_true_xen, lf_datasize,
                                                              path_to_pickles=path_data,
                                                              n_true_xen=n_true_xen,
                                                              hf_simulator=hf_simulator,
-                                                             config_data=config_data)
+                                                             config_data=config_data,
+                                                             task=simulator_task)
     
     # Load training data
     lf_data, hf_data = generate_train_data(simulate_train_data=gener_train_data, 
